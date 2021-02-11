@@ -98,10 +98,6 @@ int main(void)
   MX_DMA_Init();
   /* USER CODE BEGIN 2 */
 
-  File_Init();
-
-  find_text_file();
-
   FB_Init();
 
   FB_Main_Screen();
