@@ -9,22 +9,36 @@
 #define MODULES_FILE_MANAGER_FILE_MANAGER_H_
 #include "fatfs.h"
 
+typedef struct __file_manager
+{
+	FATFS drive_handler;
+	FIL file_handler;
+	FRESULT file_result;
+	DIR file_direction;
+	FILINFO file_info;
+	char file_rx_buffer[256];
+	char file_current_dir[256];
+	uint32_t file_bytes_read;
+	uint32_t file_bytes_write;
 
-void find_text_file(void);
+}file_manager_t;
 
+//void find_text_file(void);
 
-FRESULT File_Init(void);
+void File_Find_Text_File(file_manager_t *file_manage);
 
-FRESULT File_Deinit(void);
+void File_Init(file_manager_t *file_manage);
 
-FRESULT File_Create_Dir(const TCHAR *dir);
+void File_Deinit(file_manager_t *file_manage);
 
-FRESULT File_Get_Dir(void);
+void File_Create_Dir(file_manager_t *file_manage, const TCHAR *dir);
 
-FRESULT File_Create(TCHAR *file_dir,char *file_name);
+void File_Get_Dir(file_manager_t *file_manage);
 
-FRESULT File_Read(TCHAR *file_dir);
+void File_Create(file_manager_t *file_manage, TCHAR *file_dir,char *file_name);
 
-FRESULT File_Write(TCHAR *file_dir,const char *data);
+void File_Read(file_manager_t *file_manage, TCHAR *file_dir);
+
+void File_Write(file_manager_t *file_manage, TCHAR *file_dir,const char *data);
 
 #endif /* MODULES_FILE_MANAGER_FILE_MANAGER_H_ */

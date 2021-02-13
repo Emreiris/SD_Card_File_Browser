@@ -12,33 +12,23 @@
 #include "sdmmc.h"
 #include <string.h>
 #include <stdio.h>
+#include "file_manager.h"
 
-static FATFS drive_handler;
-static FIL file_handler;
-static char file_rx_buffer[256];
-static char file_current_dir[256];
-
-static uint32_t bytes_read;
-static uint32_t bytes_write;
 
 extern char SDPath[4];
 
 char file_names[4][32];
 
-#if 1
-FRESULT fr;     /* Return value */
-DIR dj;         /* Directory search object */
-FILINFO fno;    /* File information */
-#endif
-
-FRESULT File_Init(void)
+void File_Init(file_manager_t *file_manage)
 {
 	MX_SDMMC1_SD_Init();
 	MX_FATFS_Init();
-	return f_mount(&drive_handler, SDPath, 0);
+	file_manage->file_result = f_mount(&file_manage->drive_handler, SDPath, 0);
 }
 
-void find_text_file(void)
+
+#if 0
+file_manager_t find_text_file(void)
 {
 
 	size_t i = 0;
@@ -52,65 +42,72 @@ void find_text_file(void)
     }
 
     f_closedir(&dj);
-    }
-
-
-
-FRESULT File_Deinit(void)
-{
-	return f_mount(0, SDPath, 0);
 }
+#endif
 
-FRESULT File_Create_Dir(const TCHAR *dir)
+void File_Find_Text_File(file_manager_t *file_manage)
 {
-	return f_mkdir(dir);
-}
 
-FRESULT File_Change_Dir(const TCHAR *dir)
-{
-	return f_chdir(dir);
-}
+	static size_t file_counter = 0;
+	if( file_counter == 0)
+	{
+		file_manage->file_result = f_findfirst(&file_manage->file_direction,&file_manage->file_info, "", "dir*.txt");
+	}
+	else if(( file_manage->file_result == FR_OK ) && ( file_manage->file_info.fname[0] ) && ( file_counter != 0))
+	{
+		file_manage->file_result = f_findnext(&file_manage->file_direction, &file_manage->file_info);
 
-FRESULT File_Get_Dir(void)
-{
-	return f_getcwd(file_current_dir, strlen(file_current_dir));
-}
-
-
-FRESULT File_Create(TCHAR *file_dir,char *file_name)
-{
-	static FRESULT result;
-
-	result = f_open(&file_handler, file_dir, FA_CREATE_NEW);
-
-	result = f_close(&file_handler);
-
-	return result;
+		if(( file_manage->file_result == FR_OK ) && ( file_manage->file_info.fname[0] ) )
+		{
+			file_counter = 0;
+		}
+	}
 
 }
 
-FRESULT File_Read(TCHAR *file_dir)
+void File_Deinit(file_manager_t *file_manage)
 {
-	static FRESULT result;
-	result = f_open(&file_handler, file_dir, FA_READ);
-
-	result = f_read(&file_handler, (char *)file_rx_buffer, sizeof(file_rx_buffer), (UINT *)&bytes_read);
-
-	result = f_close(&file_handler);
-	return result;
+	file_manage->file_result = f_mount(0, SDPath, 0);
 }
 
-FRESULT File_Write(TCHAR *file_dir,const char *data)
+void File_Create_Dir(file_manager_t *file_manage,const TCHAR *dir)
 {
-	static FRESULT result;
+	file_manage->file_result = f_mkdir(dir);
+}
 
-	result = f_open(&file_handler, file_dir, FA_OPEN_APPEND|FA_WRITE);
+void File_Change_Dir(file_manager_t *file_manage,const TCHAR *dir)
+{
+	file_manage->file_result = f_chdir(dir);
+}
 
-	result = f_write(&file_handler, data, strlen(data), (UINT *)&bytes_write);
+void File_Get_Dir(file_manager_t *file_manage)
+{
+	file_manage->file_result = f_getcwd(file_manage->file_current_dir, strlen(file_manage->file_current_dir));
+}
 
-	result = f_close(&file_handler);
+void File_Create(file_manager_t *file_manage, TCHAR *file_dir,char *file_name)
+{
+	file_manage->file_result = f_open(&file_manage->file_handler, file_dir, FA_CREATE_NEW);
 
-	return result;
+	file_manage->file_result = f_close(&file_manage->file_handler);
+}
+
+void File_Read(file_manager_t *file_manage, TCHAR *file_dir)
+{
+	file_manage->file_result = f_open(&file_manage->file_handler, file_dir, FA_READ);
+
+	file_manage->file_result = f_read(&file_manage->file_handler,file_manage->file_rx_buffer, sizeof(file_manage->file_rx_buffer), (UINT *)file_manage->file_bytes_read);
+
+	file_manage->file_result = f_close(&file_manage->file_handler);
+}
+
+void File_Write(file_manager_t *file_manage, TCHAR *file_dir,const char *data)
+{
+	file_manage->file_result = f_open(&file_manage->file_handler, file_dir, FA_OPEN_APPEND|FA_WRITE);
+
+	file_manage->file_result = f_write(&file_manage->file_handler, data, strlen(data), (UINT *)file_manage->file_bytes_write);
+
+	file_manage->file_result = f_close(&file_manage->file_handler);
 }
 
 #endif /* APPLICATION_FILE_MANAGER_FILE_MANAGER_C_ */

@@ -98,9 +98,13 @@ int main(void)
   MX_DMA_Init();
   /* USER CODE BEGIN 2 */
 
+  /* Module Init */
   FB_Init();
 
+  /* Create Main Screen */
   FB_Main_Screen();
+
+
 
   /* USER CODE END 2 */
 
