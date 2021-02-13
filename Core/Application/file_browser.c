@@ -13,9 +13,8 @@
 #include "displayer_gui_driver.h"
 #include "touch_screen_gui_driver.h"
 
-
-extern char file_names[4][32];
-
+file_manager_t file_manage;
+extern char SDPath[4];
 
 static void FB_Message_Warning(lv_obj_t *parent, uint16_t x_pos, uint16_t y_pos, const char *message);
 
@@ -28,7 +27,9 @@ void FB_Init(void)
 
 void FB_Main_Screen(void)
 {
+	File_Init(&file_manage);
 
+	File_Find_Text_File(&file_manage);
 
 }
 

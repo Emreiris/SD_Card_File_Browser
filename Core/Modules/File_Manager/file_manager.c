@@ -17,8 +17,6 @@
 
 extern char SDPath[4];
 
-char file_names[4][32];
-
 void File_Init(file_manager_t *file_manage)
 {
 	MX_SDMMC1_SD_Init();
@@ -48,10 +46,11 @@ file_manager_t find_text_file(void)
 void File_Find_Text_File(file_manager_t *file_manage)
 {
 
-	static size_t file_counter = 0;
-	if( file_counter == 0)
+	static size_t  file_counter = 0;
+	if( file_counter == 0 )
 	{
-		file_manage->file_result = f_findfirst(&file_manage->file_direction,&file_manage->file_info, "", "dir*.txt");
+		file_manage->file_result = f_findfirst(&file_manage->file_direction,&file_manage->file_info, "", "fil*.txt");
+
 	}
 	else if(( file_manage->file_result == FR_OK ) && ( file_manage->file_info.fname[0] ) && ( file_counter != 0))
 	{
