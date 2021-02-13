@@ -13,26 +13,29 @@
 #include "displayer_gui_driver.h"
 #include "touch_screen_gui_driver.h"
 
-file_manager_t file_manage;
+file_manager_t file_manage = {.file_result = FR_DISK_ERR};
 extern char SDPath[4];
 
 static void FB_Message_Warning(lv_obj_t *parent, uint16_t x_pos, uint16_t y_pos, const char *message);
+
+/* Will be tested */
 
 void FB_Init(void)
 {
 	  Displayer_GUI_Init();
 	  Touch_Screen_Init();
+	  File_Init(&file_manage);
 }
 
+/* Will be tested */
 
 void FB_Main_Screen(void)
 {
-	File_Init(&file_manage);
-
-	File_Find_Text_File(&file_manage);
 
 }
 
+
+/* Will be tested */
 
 static void FB_Message_Warning(lv_obj_t *parent, uint16_t x_pos, uint16_t y_pos, const char *message)
 {

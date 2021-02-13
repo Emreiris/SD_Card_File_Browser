@@ -31,8 +31,10 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 #include "lvgl.h"
-#include "file_manager.h"
 #include <file_browser.h>
+#include <file_manager.h>
+#include <displayer_gui_driver.h>
+#include <touch_screen_gui_driver.h>
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -58,7 +60,9 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+static file_manager_t file_manage = {.file_result = FR_DISK_ERR};
 
+uint8_t status;
 /* USER CODE END 0 */
 
 /**
@@ -98,12 +102,20 @@ int main(void)
   MX_DMA_Init();
   /* USER CODE BEGIN 2 */
 
-  /* Module Init */
-  FB_Init();
+  Displayer_GUI_Init();
+  Touch_Screen_Init();
 
-  /* Create Main Screen */
-  FB_Main_Screen();
+  File_Init(&file_manage);
 
+  File_Get_Dir(&file_manage);
+
+  File_Create_Dir(&file_manage, "0:/Sub_module_1");
+
+  File_Change_Dir(&file_manage, "0:/Sub_module_1");
+
+
+  /*  It has a problem */
+  File_Get_Dir(&file_manage);
 
 
   /* USER CODE END 2 */
@@ -112,8 +124,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-
 	  lv_task_handler();
 
     /* USER CODE END WHILE */
@@ -207,10 +217,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
 
-	  if (htim->Instance == TIM1) {
-	    HAL_IncTick();
-	    lv_tick_inc(1);
-	  }
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM1) {
     HAL_IncTick();
