@@ -13,8 +13,10 @@
 #include "displayer_gui_driver.h"
 #include "touch_screen_gui_driver.h"
 
+#define DISK_DETECT() \
+	BSP_SD_IsDetected()
+
 file_manager_t file_manage = {.file_result = FR_DISK_ERR};
-extern char SDPath[4];
 
 static void FB_Message_Warning(lv_obj_t *parent, uint16_t x_pos, uint16_t y_pos, const char *message);
 
@@ -48,3 +50,4 @@ static void FB_Message_Warning(lv_obj_t *parent, uint16_t x_pos, uint16_t y_pos,
 	lv_msgbox_add_btns(message_box, btn_str);
 
 }
+

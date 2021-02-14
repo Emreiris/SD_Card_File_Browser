@@ -9,6 +9,10 @@
 #define MODULES_FILE_MANAGER_FILE_MANAGER_H_
 #include "fatfs.h"
 
+#define	FILE_TEXT   (0)
+#define	FILE_FOLDER (1)
+#define	FILE_IMAGE  (2)
+
 typedef struct __file_manager
 {
 	FATFS drive_handler;
@@ -21,12 +25,12 @@ typedef struct __file_manager
 	char file_current_dir[256];
 	uint32_t file_bytes_read;
 	uint32_t file_bytes_write;
-
+	size_t file_counter;
 }file_manager_t;
 
-//void find_text_file(void);
 
-void File_Find_Text_File(file_manager_t *file_manage);
+
+void File_Find_File(file_manager_t *file_manage,uint8_t file_type);
 
 void File_Init(file_manager_t *file_manage);
 
