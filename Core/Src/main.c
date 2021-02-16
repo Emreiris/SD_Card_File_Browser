@@ -107,6 +107,10 @@ int main(void)
 
   File_Init(&file_manage);
 
+  File_Find_File(&file_manage, FILE_TEXT);
+
+  File_Change_Dir(&file_manage, SDPath);
+
   lv_obj_t *label  = lv_label_create(lv_scr_act(), NULL);
 
   lv_obj_set_pos(label, 20, 20);
@@ -117,11 +121,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  File_Find_File(&file_manage, FILE_TEXT);
+	  File_Get_Dir_2(&file_manage);
 
 	  lv_label_set_text(label,file_manage.file_info.fname);
 
-	  HAL_Delay(250);
+	  HAL_Delay(1000);
 	  lv_task_handler();
 
     /* USER CODE END WHILE */
