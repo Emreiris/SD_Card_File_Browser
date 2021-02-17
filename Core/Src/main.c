@@ -121,7 +121,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  File_Get_Dir_2(&file_manage);
+	  File_Find_File(&file_manage, FILE_FOLDER);
 
 	  lv_label_set_text(label,file_manage.file_info.fname);
 

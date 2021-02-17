@@ -31,24 +31,45 @@ void File_Init(file_manager_t *file_manage)
 
 void File_Find_File(file_manager_t *file_manage, uint8_t file_type)
 {
-	static const char file_types[3][20] = { "?*.txt", "(?<!.txt|.bin)( )", "?*.bin"}; /* Basic regex */
+	static const char file_types[2][10] = { "?*.txt", "?*.bin"}; /* Basic regex */
 
-	if( file_manage->file_counter == 0 )
+	switch(file_type)
+	case FILE_FOLDER:
 	{
-		file_manage->file_result = f_findfirst(&file_manage->file_direction, &file_manage->file_info,
-											   &file_manage->file_current_dir[0], &file_types[file_type][0]);
-		++file_manage->file_counter;
-	}
-	else if( ( file_manage->file_result == FR_OK ) && ( file_manage->file_info.fname[0] ) &&
-			 ( file_manage->file_counter > 0 ) )
-	{
-		file_manage->file_result = f_findnext(&file_manage->file_direction, &file_manage->file_info);
-		++file_manage->file_counter;
-	}
+		file_manage->file_result = f_readdir(&file_manage->file_direction, &file_manage->file_info);
 
-	if( file_manage->file_info.fname[0] == 0x00 )
+		if( (strstr(file_manage->file_info.fname, ".txt") != NULL) || (strstr(file_manage->file_info.fname, ".bin")))
+		{
+			memset(file_manage->file_info.fname, 0x00, 256);
+		}
+		else if( file_manage->file_info.fname[0] == 0x00 )
+		{
+			break;
+		}
+		break;
+
+	case FILE_IMAGE:
+	case FILE_TEXT:
 	{
-		file_manage->file_counter = 0;
+		if( file_manage->file_counter == 0 )
+		{
+			file_manage->file_result = f_findfirst(&file_manage->file_direction, &file_manage->file_info,
+											   	   &file_manage->file_current_dir[0], &file_types[file_type][0]);
+			++file_manage->file_counter;
+		}
+		else if( ( file_manage->file_result == FR_OK ) && ( file_manage->file_info.fname[0] ) &&
+				( file_manage->file_counter > 0 ) )
+		{
+			file_manage->file_result = f_findnext(&file_manage->file_direction, &file_manage->file_info);
+			++file_manage->file_counter;
+		}
+
+		if( file_manage->file_info.fname[0] == 0x00 )
+		{
+			file_manage->file_counter = 0;
+		}
+	}
+	break;
 	}
 
 }
@@ -82,11 +103,6 @@ void File_Change_Dir(file_manager_t *file_manage,const TCHAR *dir)
 void File_Get_Dir(file_manager_t *file_manage)
 {
 	file_manage->file_result = f_getcwd(file_manage->file_current_dir, sizeof(file_manage->file_current_dir));
-}
-
-void File_Get_Dir_2(file_manager_t *file_manage)
-{
-	file_manage->file_result = f_readdir(&file_manage->file_direction, &file_manage->file_info);
 }
 
 /*tested, working correctly */

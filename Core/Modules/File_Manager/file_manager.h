@@ -9,9 +9,11 @@
 #define MODULES_FILE_MANAGER_FILE_MANAGER_H_
 #include "fatfs.h"
 
+#if 1
 #define	FILE_TEXT   (0)
-#define	FILE_FOLDER (1)
-#define	FILE_IMAGE  (2)
+#define	FILE_IMAGE  (1)
+#define	FILE_FOLDER (2)
+#endif
 
 typedef struct __file_manager
 {
@@ -28,8 +30,6 @@ typedef struct __file_manager
 	size_t file_counter;
 }file_manager_t;
 
-
-
 void File_Find_File(file_manager_t *file_manage,uint8_t file_type);
 
 void File_Init(file_manager_t *file_manage);
@@ -41,8 +41,6 @@ void File_Create_Dir(file_manager_t *file_manage, const TCHAR *dir);
 void File_Get_Dir(file_manager_t *file_manage);
 
 void File_Change_Dir(file_manager_t *file_manage,const TCHAR *dir);
-
-void File_Get_Dir_2(file_manager_t *file_manage);
 
 void File_Create_File(file_manager_t *file_manage, TCHAR *file_name);
 
