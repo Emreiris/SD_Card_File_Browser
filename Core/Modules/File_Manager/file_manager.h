@@ -7,13 +7,12 @@
 
 #ifndef MODULES_FILE_MANAGER_FILE_MANAGER_H_
 #define MODULES_FILE_MANAGER_FILE_MANAGER_H_
+
 #include "fatfs.h"
 
-#if 1
 #define	FILE_TEXT   (0)
 #define	FILE_IMAGE  (1)
 #define	FILE_FOLDER (2)
-#endif
 
 typedef struct __file_manager /* struct tag */
 {
@@ -42,7 +41,7 @@ void File_Get_Dir(file_manager_t *file_manage);
 
 void File_Change_Dir(file_manager_t *file_manage,const TCHAR *dir);
 
-void File_Create_File(file_manager_t *file_manage, TCHAR *file_name);
+void File_Create_File(file_manager_t *file_manage,const  TCHAR *file_name);
 
 void File_Read(file_manager_t *file_manage, TCHAR *file_name);
 

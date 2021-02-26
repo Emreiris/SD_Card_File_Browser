@@ -12,6 +12,6 @@
 
 void Displayer_Init();
 
-void Display_Draw_Pixel (int16_t Xpos, int16_t Ypos, uint32_t color);
+void Display_Draw_Pixel(int16_t x_pos, int16_t y_pos, uint32_t color);
 
 #endif /* MODULES_SCREEN_DISPLAYER_DISPLAYER_H_ */

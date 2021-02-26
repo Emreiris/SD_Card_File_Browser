@@ -5,10 +5,11 @@
  *      Author: emrei
  */
 
-#include <file_browser.h>
 #include <stdint.h>
-#include <lvgl.h>
-#include <stm32f7xx_hal.h>
+
+#include "file_browser.h"
+#include "lvgl.h"
+#include "stm32f7xx_hal.h"
 #include "file_manager.h"
 #include "displayer_gui_driver.h"
 #include "touch_screen_gui_driver.h"

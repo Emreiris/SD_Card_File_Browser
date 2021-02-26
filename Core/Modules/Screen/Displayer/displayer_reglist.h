@@ -5,8 +5,8 @@
  *      Author: emrei
  */
 
-#ifndef MODULES_SCREEN_DISPLAYER_DISPLAYER_CONST_H_
-#define MODULES_SCREEN_DISPLAYER_DISPLAYER_CONST_H_
+#ifndef MODULES_SCREEN_DISPLAYER_DISPLAYER_REGLIST_H_
+#define MODULES_SCREEN_DISPLAYER_DISPLAYER_REGLIST_H_
 
 /**
   * @brief  Displayer Size
@@ -25,4 +25,4 @@
 #define  DISPLAYER_VBP              ((uint16_t)2)    /* Vertical back porch        */
 #define  DISPLAYER_VFP              ((uint16_t)2)    /* Vertical front porch       */
 
-#endif /* MODULES_SCREEN_DISPLAYER_DISPLAYER_CONST_H_ */
+#endif /* MODULES_SCREEN_DISPLAYER_DISPLAYER_REGLIST_H_ */

@@ -8,28 +8,63 @@
 #ifndef APPLICATION_FILE_MANAGER_FILE_MANAGER_C_
 #define APPLICATION_FILE_MANAGER_FILE_MANAGER_C_
 
-#include "fatfs.h"
-#include "sdmmc.h"
+/*
+ * standart libs
+ */
+
 #include <string.h>
 #include <stdio.h>
+
+/*
+ * costum libs
+ */
+
+#include "fatfs.h"
+#include "sdmmc.h"
 #include "file_manager.h"
+
+/*
+ * @variable definitions
+ */
 
 extern char SDPath[4];
 
-/* tested, working correctly */
+/*
+ * @param  = pointer to file_manager_t
+ * @retval = none.
+ * @brief  = File system initialization that is compatible with SD card memory blocks.
+ */
 
 void File_Init(file_manager_t *file_manage)
 {
 	MX_SDMMC1_SD_Init();
 	MX_FATFS_Init();
-	file_manage->file_result = f_mount(&file_manage->drive_handler, SDPath, 0);
+	file_manage->file_result = f_mount(&file_manage->drive_handler, SDPath, 1);
 	File_Get_Dir(file_manage);
 	File_Change_Dir(file_manage, SDPath);
 	File_Get_Dir(file_manage);
-
 }
 
-/* tested, working correctly */
+/*
+ * @param  = pointer to file_manager_t
+ * @retval = none.
+ * @brief  = File system deinitialization that is compatible with SD card memory blocks.
+ */
+
+inline void File_Deinit(file_manager_t *file_manage)
+{
+	file_manage->file_result = f_mount(0, SDPath, 1);
+}
+
+/*
+ * @param1  = pointer to file_manager_t
+ * @param2  = file type
+ * TEXT   = 0,
+ * IMAGE  = 1,
+ * FOLDER = 2,
+ * @retval  = none.
+ * @brief   = Finds desired files in current direction. Stores file name in fil_info.
+ */
 
 void File_Find_File(file_manager_t *file_manage, uint8_t file_type)
 {
@@ -75,16 +110,12 @@ void File_Find_File(file_manager_t *file_manage, uint8_t file_type)
 
 }
 
-
-
-/* tested, working correctly. */
-
-void File_Deinit(file_manager_t *file_manage)
-{
-	file_manage->file_result = f_mount(0, SDPath, 0);
-}
-
-/*tested, working correctly */
+/*
+ * @param1  = pointer to file_manager_t
+ * @param2  = direction name that is desired to be created.
+ * @retval = none.
+ * @brief  = Creates new direction for current direction. Creates folder to be spesific.
+ */
 
 void File_Create_Dir(file_manager_t *file_manage,const TCHAR *dir)
 {
@@ -93,7 +124,12 @@ void File_Create_Dir(file_manager_t *file_manage,const TCHAR *dir)
 	file_manage->file_result = f_mkdir(strcat(file_manage->file_current_dir, dir));
 }
 
-/*tested, working correctly */
+/*
+ * @param1  = pointer to file_manager_t
+ * @param2  = direction name that is desired to be changed.
+ * @retval = none.
+ * @brief  = Changes direction in current direction.
+ */
 
 void File_Change_Dir(file_manager_t *file_manage,const TCHAR *dir)
 {
@@ -102,16 +138,25 @@ void File_Change_Dir(file_manager_t *file_manage,const TCHAR *dir)
 	File_Get_Dir(file_manage);
 }
 
-/*tested, working correctly */
+/*
+ * @param  = pointer to file_manager_t
+ * @retval = none.
+ * @brief  = Gets current direction.
+ */
 
-void File_Get_Dir(file_manager_t *file_manage)
+inline void File_Get_Dir(file_manager_t *file_manage)
 {
 	file_manage->file_result = f_getcwd(file_manage->file_current_dir, sizeof(file_manage->file_current_dir));
 }
 
-/*tested, working correctly */
+/*
+ * @param1  = pointer to file_manager_t
+ * @param2  = file name that is desired to be created.
+ * @retval = none.
+ * @brief  = Creates new file in current direction.
+ */
 
-void File_Create_File(file_manager_t *file_manage, TCHAR *file_name)
+void File_Create_File(file_manager_t *file_manage,const  TCHAR *file_name)
 {
 	strcat(file_manage->file_current_dir,"\\");
 	file_manage->file_result = f_open(&file_manage->file_handler, strcat(file_manage->file_current_dir, file_name), FA_CREATE_NEW);
@@ -119,7 +164,12 @@ void File_Create_File(file_manager_t *file_manage, TCHAR *file_name)
 	File_Get_Dir(file_manage);
 }
 
-/* tested, working correctly. */
+/*
+ * @param1  = pointer to file_manager_t
+ * @param2  = file name that is desired to be read.
+ * @retval = none.
+ * @brief  = Reads file in current direction if exist.
+ */
 
 void File_Read(file_manager_t *file_manage, TCHAR *file_name)
 {
@@ -128,7 +178,13 @@ void File_Read(file_manager_t *file_manage, TCHAR *file_name)
 	file_manage->file_result = f_close(&file_manage->file_handler);
 }
 
-/* tested, working correctly */
+/*
+ * @param1  = pointer to file_manager_t
+ * @param2  = file name that is desired to write data.
+ * @param3  = char type data to write into file.
+ * @retval  = none.
+ * @brief   = Opens existing file and writes data.
+ */
 
 void File_Write(file_manager_t *file_manage, TCHAR *file_name,const char *data)
 {

@@ -5,12 +5,20 @@
  *      Author: emrei
  */
 
+/*
+ * standart libs
+ */
+
 #include <stdint.h>
 #include <stdlib.h>
 
+/*
+ * costum libs
+ */
+
+#include "displayer_reglist.h"
 #include "stm32f7xx.h"
 #include "displayer.h"
-#include "displayer_const.h"
 
 /*
  * lCD Back Light On
@@ -34,9 +42,9 @@ LTDC_HandleTypeDef lcd_handle;
 static void Displayer_Layer_Init(void);
 
 /*
- * param : none.
- * retval: none.
- * brief : This function gets displayer ready to be driven.
+ * @param  = none.
+ * @retval = none.
+ * @brief  = This function gets displayer ready to be driven.
  */
 
 void Displayer_Init()
@@ -71,13 +79,11 @@ void Displayer_Init()
 
 }
 
-
 /*
- * param : none.
- * retval: none.
- * brief : This function initialises first layer.
+ * @param  = none.
+ * @retval = none.
+ * @brief  = This function initialises first layer.
  */
-
 
 static void Displayer_Layer_Init(void)
 {
@@ -102,12 +108,16 @@ static void Displayer_Layer_Init(void)
 }
 
 /*
- * NOTE : This function will wait for SDRAM to start.
+ *@param1 = pixel x position.
+ *@param2 = pixel y position.
+ *@param3 = color to targeted position.
+ *@retval = none.
+ *@brief  = This function puts pixel to targeted position.
  */
 
-void Display_Draw_Pixel (int16_t Xpos, int16_t Ypos, uint32_t color)
+__attribute__((always_inline)) inline void Display_Draw_Pixel(int16_t x_pos, int16_t y_pos, uint32_t color)
 {
-	*(__IO uint32_t *)(lcd_handle.LayerCfg[0].FBStartAdress+( 4 * (Ypos * lcd_handle.LayerCfg [0] .ImageWidth + Xpos))) = color;
+	*(volatile uint32_t *)(lcd_handle.LayerCfg[0].FBStartAdress+( 4 * (y_pos * lcd_handle.LayerCfg [0] .ImageWidth + x_pos))) = color;
 }
 
 
