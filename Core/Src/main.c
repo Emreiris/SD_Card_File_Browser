@@ -32,9 +32,7 @@
 /* USER CODE BEGIN PTD */
 #include "lvgl.h"
 #include <file_browser.h>
-#include <file_manager.h>
-#include <displayer_gui_driver.h>
-#include <touch_screen_gui_driver.h>
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -60,9 +58,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-static file_manager_t file_manage = {.file_result = FR_DISK_ERR,.file_counter = 0 };
-
-uint8_t status;
+size_t y;
 /* USER CODE END 0 */
 
 /**
@@ -102,18 +98,9 @@ int main(void)
   MX_DMA_Init();
   /* USER CODE BEGIN 2 */
 
-  Displayer_GUI_Init();
-  Touch_Screen_Init();
-
-  File_Init(&file_manage);
-
-  File_Find_File(&file_manage, FILE_TEXT);
-
-  File_Change_Dir(&file_manage, SDPath);
-
-  lv_obj_t *label  = lv_label_create(lv_scr_act(), NULL);
-
-  lv_obj_set_pos(label, 20, 20);
+  /* Module Initialization */
+  FB_Init();
+  FB_Main_Screen();
 
   /* USER CODE END 2 */
 
@@ -121,11 +108,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  File_Find_File(&file_manage, FILE_FOLDER);
-
-	  lv_label_set_text(label,file_manage.file_info.fname);
-
-	  HAL_Delay(1000);
 	  lv_task_handler();
 
     /* USER CODE END WHILE */
@@ -204,20 +186,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
-/* USER CODE END 4 */
-
-
-/**
- * @brief  Period elapsed callback in non blocking mode
- * @note   This function is called  when TIM1 interrupt took place, inside
- * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
- * a global variable "uwTick" used as application time base.
- * @param  htim : TIM handle
- * @retval None
- * WARNING : Don't touch this code.
- */
-
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
  /* USER CODE BEGIN Callback 0 */
@@ -225,13 +193,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
  /* USER CODE END Callback 0 */
  if (htim->Instance == TIM1)
  {
+
 	 lv_tick_inc(1);
 	 HAL_IncTick();
+
  }
  /* USER CODE BEGIN Callback 1 */
 
  /* USER CODE END Callback 1 */
 }
+/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.

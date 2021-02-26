@@ -15,7 +15,7 @@
 #define	FILE_FOLDER (2)
 #endif
 
-typedef struct __file_manager
+typedef struct __file_manager /* struct tag */
 {
 	FATFS drive_handler;
 	FIL file_handler;
@@ -28,7 +28,7 @@ typedef struct __file_manager
 	uint32_t file_bytes_read;
 	uint32_t file_bytes_write;
 	size_t file_counter;
-}file_manager_t;
+}file_manager_t __attribute__((aligned));
 
 void File_Find_File(file_manager_t *file_manage,uint8_t file_type);
 

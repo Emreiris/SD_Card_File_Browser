@@ -13,10 +13,6 @@ RM := rm -rf
 -include FATFS/Target/subdir.mk
 -include FATFS/App/subdir.mk
 -include Drivers/STM32F7xx_HAL_Driver/Src/subdir.mk
--include Core/lvgl/tests/lv_test_widgets/subdir.mk
--include Core/lvgl/tests/lv_test_fonts/subdir.mk
--include Core/lvgl/tests/lv_test_core/subdir.mk
--include Core/lvgl/tests/subdir.mk
 -include Core/lvgl/src/lv_widgets/subdir.mk
 -include Core/lvgl/src/lv_themes/subdir.mk
 -include Core/lvgl/src/lv_misc/subdir.mk
@@ -25,13 +21,13 @@ RM := rm -rf
 -include Core/lvgl/src/lv_font/subdir.mk
 -include Core/lvgl/src/lv_draw/subdir.mk
 -include Core/lvgl/src/lv_core/subdir.mk
--include Core/lvgl/examples/porting/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include Core/Modules/Screen/Touch_Screen/subdir.mk
 -include Core/Modules/Screen/Displayer/subdir.mk
 -include Core/Modules/SDRAM/subdir.mk
 -include Core/Modules/File_Manager/subdir.mk
+-include Core/Application/Submodules/subdir.mk
 -include Core/Application/subdir.mk
 -include subdir.mk
 -include objects.mk
