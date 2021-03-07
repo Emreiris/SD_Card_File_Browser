@@ -21,6 +21,7 @@
 #include "main.h"
 #include "dma.h"
 #include "fatfs.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -58,7 +59,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-size_t y;
+
 /* USER CODE END 0 */
 
 /**
@@ -96,6 +97,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
   /* Module Initialization */
@@ -193,10 +195,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
  /* USER CODE END Callback 0 */
  if (htim->Instance == TIM1)
  {
-
 	 lv_tick_inc(1);
 	 HAL_IncTick();
-
  }
  /* USER CODE BEGIN Callback 1 */
 

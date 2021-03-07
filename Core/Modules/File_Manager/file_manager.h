@@ -10,10 +10,6 @@
 
 #include "fatfs.h"
 
-#define	FILE_TEXT   (0)
-#define	FILE_IMAGE  (1)
-#define	FILE_FOLDER (2)
-
 typedef struct __file_manager /* struct tag */
 {
 	FATFS drive_handler;
@@ -29,22 +25,22 @@ typedef struct __file_manager /* struct tag */
 	size_t file_counter;
 }file_manager_t __attribute__((aligned));
 
-void File_Find_File(file_manager_t *file_manage,uint8_t file_type);
+void File_Find_File(file_manager_t *file_manage);
 
 void File_Init(file_manager_t *file_manage);
 
 void File_Deinit(file_manager_t *file_manage);
 
-void File_Create_Dir(file_manager_t *file_manage, const TCHAR *dir);
+void File_Create_Dir(file_manager_t *file_manage,TCHAR *dir);
 
 void File_Get_Dir(file_manager_t *file_manage);
 
-void File_Change_Dir(file_manager_t *file_manage,const TCHAR *dir);
+void File_Change_Dir(file_manager_t *file_manage,TCHAR *dir);
 
-void File_Create_File(file_manager_t *file_manage,const  TCHAR *file_name);
+void File_Create_File(file_manager_t *file_manage,TCHAR *file_name);
 
 void File_Read(file_manager_t *file_manage, TCHAR *file_name);
 
-void File_Write(file_manager_t *file_manage, TCHAR *file_name,const char *data);
+void File_Write(file_manager_t *file_manage, TCHAR *file_name,char *data);
 
 #endif /* MODULES_FILE_MANAGER_FILE_MANAGER_H_ */

@@ -19,6 +19,7 @@
 "Core/Src/syscalls.o"
 "Core/Src/sysmem.o"
 "Core/Src/system_stm32f7xx.o"
+"Core/Src/tim.o"
 "Core/Startup/startup_stm32f746nghx.o"
 "Core/lvgl/src/lv_core/lv_disp.o"
 "Core/lvgl/src/lv_core/lv_group.o"

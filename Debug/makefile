@@ -1,5 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
+# Toolchain: GNU Tools for STM32 (9-2020-q2-update)
 ################################################################################
 
 -include ../makefile.init
@@ -46,6 +47,12 @@ endif
 
 -include ../makefile.defs
 
+OPTIONAL_TOOL_DEPS := \
+$(wildcard ../makefile.defs) \
+$(wildcard ../makefile.init) \
+$(wildcard ../makefile.targets) \
+
+
 BUILD_ARTIFACT_NAME := SD_Card_File_System
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX := 
@@ -72,22 +79,22 @@ all: main-build
 main-build: SD_Card_File_System.elf secondary-outputs
 
 # Tool invocations
-SD_Card_File_System.elf: $(OBJS) $(USER_OBJS) D:\Warm\ up\ Projects\Embedded\ Software\ Projects\ST\ Projects\STM32F7\SD_Card_File_Browser\STM32F746NGHX_FLASH.ld
+SD_Card_File_System.elf: $(OBJS) $(USER_OBJS) D:\Warm\ up\ Projects\Embedded\ Software\ Projects\ST\ Projects\STM32F7\SD_Card_File_Browser\STM32F746NGHX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-gcc -o "SD_Card_File_System.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"D:\Warm up Projects\Embedded Software Projects\ST Projects\STM32F7\SD_Card_File_Browser\STM32F746NGHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SD_Card_File_System.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-default.size.stdout: $(EXECUTABLES)
+default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-size  $(EXECUTABLES)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-SD_Card_File_System.list: $(EXECUTABLES)
+SD_Card_File_System.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "SD_Card_File_System.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-SD_Card_File_System.bin: $(EXECUTABLES)
+SD_Card_File_System.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "SD_Card_File_System.bin"
 	@echo 'Finished building: $@'
 	@echo ' '

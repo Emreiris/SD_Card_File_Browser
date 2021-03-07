@@ -115,7 +115,7 @@ static void Displayer_Layer_Init(void)
  *@brief  = This function puts pixel to targeted position.
  */
 
-__attribute__((always_inline)) inline void Display_Draw_Pixel(int16_t x_pos, int16_t y_pos, uint32_t color)
+inline void Display_Draw_Pixel(int16_t x_pos, int16_t y_pos, uint32_t color)
 {
 	*(volatile uint32_t *)(lcd_handle.LayerCfg[0].FBStartAdress+( 4 * (y_pos * lcd_handle.LayerCfg [0] .ImageWidth + x_pos))) = color;
 }

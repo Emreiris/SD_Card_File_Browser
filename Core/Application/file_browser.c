@@ -15,7 +15,7 @@
 #include "touch_screen_gui_driver.h"
 
 #define DISK_DETECT() \
-	BSP_SD_IsDetected()
+	BSP_PlatformIsDetected()
 
 typedef struct __fb_file_search
 {
@@ -35,7 +35,6 @@ static void FB_Search_Browser(fb_file_search_t *file_search, file_manager_t *fil
 static void FB_Search_Browser_Callback(lv_obj_t *obj, lv_event_t event);
 
 /* Will be tested */
-
 
 void FB_Init(void)
 {
@@ -59,17 +58,17 @@ void FB_Main_Screen(void)
 	lv_obj_set_pos(file_search.file_text_area, 0, 0);
 	lv_obj_set_size(file_search.file_text_area,LV_HOR_RES_MAX , 30);
 
-
 	FB_File_Scan(&file_search, &file_manage);
+
 	lv_scr_load(main_screen);
-	FB_Search_Browser(&file_search, &file_manage);
+
+	//FB_Search_Browser(&file_search, &file_manage);
 
 }
 
-
 /* Tested, working correctly */
 
-static void FB_Message_Warning(lv_obj_t *parent, uint16_t x_pos, uint16_t y_pos, const char *message)
+void FB_Message_Warning(lv_obj_t *parent, uint16_t x_pos, uint16_t y_pos, const char *message)
 {
 
 	static const char *btn_str[7] = {"Retry", "Close", ""};
@@ -89,21 +88,20 @@ static void FB_File_Scan(fb_file_search_t *file_search, file_manager_t *file_man
 
 	File_Change_Dir(file_manage, "my_folder_1");
 
+	File_Change_Dir(file_manage, "root_1");
+
+	File_Change_Dir(file_manage, "root_2");
+
 	lv_textarea_set_text(file_search->file_text_area, file_manage->file_current_dir);
 
-	for(int8_t i = 0; i < 3; ++i)
+	do
 	{
-		do   /* At least one time search is a must. */
+		File_Find_File(file_manage);
+		if( file_manage->file_counter != 0)
 		{
-			File_Find_File(file_manage, i);
-
-			if( file_manage->file_counter != 0)
-			{
-				lv_list_add_btn(file_search->file_list, LV_SYMBOL_FILE, file_manage->file_info.fname);
-			}
-		} while( file_manage->file_counter > 0 );
-
-	}
+			lv_list_add_btn(file_search->file_list, LV_SYMBOL_FILE, &file_manage->file_info.fname[0]);
+		}
+	} while( file_manage->file_counter > 0 );
 
 }
 
@@ -122,3 +120,15 @@ static void FB_Search_Browser_Callback(lv_obj_t *obj, lv_event_t event)
 
 	}
 }
+
+void HAL_TIM_PeriodElapsedHalfCpltCallback(TIM_HandleTypeDef *htim)
+{
+	if(htim->Instance == TIM2)
+	{
+		if(DISK_DETECT() == 0)
+		{
+			FB_Message_Warning(main_screen, 200, 136, "Test Message");
+		}
+	}
+}
+

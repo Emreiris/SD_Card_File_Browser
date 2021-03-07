@@ -39,10 +39,13 @@ void File_Init(file_manager_t *file_manage)
 {
 	MX_SDMMC1_SD_Init();
 	MX_FATFS_Init();
-	file_manage->file_result = f_mount(&file_manage->drive_handler, SDPath, 1);
+	file_manage->file_result = f_mount(&file_manage->drive_handler, SDPath, 0);
+	strncpy(file_manage->file_current_dir, SDPath, strlen(SDPath));
 	File_Get_Dir(file_manage);
-	File_Change_Dir(file_manage, SDPath);
+	file_manage->file_result = f_opendir(&file_manage->file_direction, file_manage->file_current_dir);
 	File_Get_Dir(file_manage);
+
+	File_Find_File(file_manage);
 }
 
 /*
@@ -53,59 +56,27 @@ void File_Init(file_manager_t *file_manage)
 
 inline void File_Deinit(file_manager_t *file_manage)
 {
-	file_manage->file_result = f_mount(0, SDPath, 1);
+	file_manage->file_result = f_mount(0, SDPath, 0);
 }
 
 /*
  * @param1  = pointer to file_manager_t
- * @param2  = file type
- * TEXT   = 0,
- * IMAGE  = 1,
- * FOLDER = 2,
  * @retval  = none.
  * @brief   = Finds desired files in current direction. Stores file name in fil_info.
  */
 
-void File_Find_File(file_manager_t *file_manage, uint8_t file_type)
+void File_Find_File(file_manager_t *file_manage)
 {
-	static const char file_types[2][10] = { "?*.txt", "?*.bmp"}; /* Basic regex */
 
-	switch(file_type)
-	{
-	case FILE_IMAGE:
-	case FILE_TEXT:
-	{
-		if( file_manage->file_counter == 0 )
-		{
-			file_manage->file_result = f_findfirst(&file_manage->file_direction, &file_manage->file_info,
-											   	   &file_manage->file_current_dir[0], &file_types[file_type][0]);
-			++file_manage->file_counter;
-		}
-		else if( ( file_manage->file_result == FR_OK ) && ( file_manage->file_info.fname[0] ) &&
-				( file_manage->file_counter > 0 ) )
-		{
-			file_manage->file_result = f_findnext(&file_manage->file_direction, &file_manage->file_info);
-			++file_manage->file_counter;
-		}
-		if( file_manage->file_info.fname[0] == 0x00 )
-		{
-			file_manage->file_counter = 0;
+	file_manage->file_result = f_readdir(&file_manage->file_direction, &file_manage->file_info);
 
-		}
-		break;
+	if( (file_manage->file_result != FR_OK) || (file_manage->file_info.fname[0] == '\0')  )
+	{
+		file_manage->file_counter = 0;
 	}
-	case FILE_FOLDER:
+	else
 	{
-
-		file_manage->file_result = f_readdir(&file_manage->file_direction, &file_manage->file_info);
 		++file_manage->file_counter;
-		if( file_manage->file_info.fname[0] == 0x00 )
-		{
-			file_manage->file_counter = 0;
-			break;
-		}
-
-	}
 	}
 
 }
@@ -117,11 +88,12 @@ void File_Find_File(file_manager_t *file_manage, uint8_t file_type)
  * @brief  = Creates new direction for current direction. Creates folder to be spesific.
  */
 
-void File_Create_Dir(file_manager_t *file_manage,const TCHAR *dir)
+void File_Create_Dir(file_manager_t *file_manage,TCHAR *dir)
 {
 	File_Get_Dir(file_manage);
-	strcat(file_manage->file_current_dir,"\\");
+	strcat(file_manage->file_current_dir,"/");
 	file_manage->file_result = f_mkdir(strcat(file_manage->file_current_dir, dir));
+
 }
 
 /*
@@ -131,10 +103,15 @@ void File_Create_Dir(file_manager_t *file_manage,const TCHAR *dir)
  * @brief  = Changes direction in current direction.
  */
 
-void File_Change_Dir(file_manager_t *file_manage,const TCHAR *dir)
+void File_Change_Dir(file_manager_t *file_manage,TCHAR *dir)
 {
-	strcat(file_manage->file_current_dir,"\\");
-	file_manage->file_result = f_chdir(strcat(file_manage->file_current_dir, dir));
+	File_Get_Dir(file_manage);
+
+	strcat(file_manage->file_current_dir,"/");
+	strcat(file_manage->file_current_dir, dir);
+
+	file_manage->file_result = f_opendir(&file_manage->file_direction, file_manage->file_current_dir);
+
 	File_Get_Dir(file_manage);
 }
 
@@ -144,9 +121,14 @@ void File_Change_Dir(file_manager_t *file_manage,const TCHAR *dir)
  * @brief  = Gets current direction.
  */
 
-inline void File_Get_Dir(file_manager_t *file_manage)
+void File_Get_Dir(file_manager_t *file_manage)
 {
-	file_manage->file_result = f_getcwd(file_manage->file_current_dir, sizeof(file_manage->file_current_dir));
+	static TCHAR temp_buf[256];
+	static UINT len  = 0;
+
+	file_manage->file_result = f_getcwd(temp_buf, len);
+
+	strncpy(file_manage->file_current_dir, temp_buf, len);
 }
 
 /*
@@ -156,7 +138,7 @@ inline void File_Get_Dir(file_manager_t *file_manage)
  * @brief  = Creates new file in current direction.
  */
 
-void File_Create_File(file_manager_t *file_manage,const  TCHAR *file_name)
+void File_Create_File(file_manager_t *file_manage,TCHAR *file_name)
 {
 	strcat(file_manage->file_current_dir,"\\");
 	file_manage->file_result = f_open(&file_manage->file_handler, strcat(file_manage->file_current_dir, file_name), FA_CREATE_NEW);
@@ -186,7 +168,7 @@ void File_Read(file_manager_t *file_manage, TCHAR *file_name)
  * @brief   = Opens existing file and writes data.
  */
 
-void File_Write(file_manager_t *file_manage, TCHAR *file_name,const char *data)
+void File_Write(file_manager_t *file_manage, TCHAR *file_name,char *data)
 {
 	file_manage->file_result = f_open(&file_manage->file_handler, file_name, FA_OPEN_APPEND|FA_WRITE);
 	file_manage->file_result = f_write(&file_manage->file_handler, data, strlen(data), (UINT *)file_manage->file_bytes_write);
