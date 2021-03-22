@@ -33,7 +33,7 @@
 /* USER CODE BEGIN PTD */
 #include "lvgl.h"
 #include <file_browser.h>
-
+#include <file_manager.h>
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -60,6 +60,7 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+file_manager_t file_manage;
 /* USER CODE END 0 */
 
 /**
@@ -102,7 +103,9 @@ int main(void)
 
   /* Module Initialization */
   FB_Init();
-  FB_Main_Screen();
+  //FB_Main_Screen();
+
+  File_Read(&file_manage, "audio_file.wav");
 
   /* USER CODE END 2 */
 

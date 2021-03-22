@@ -26,6 +26,7 @@ Core/Modules/File_Manager \
 Core/Modules/SDRAM \
 Core/Modules/Screen/Displayer \
 Core/Modules/Screen/Touch_Screen \
+Core/Modules/audio_decoder \
 Core/Src \
 Core/Startup \
 Core/lvgl/src/lv_core \

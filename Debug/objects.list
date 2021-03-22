@@ -6,6 +6,7 @@
 "Core/Modules/Screen/Displayer/displayer_gui_driver.o"
 "Core/Modules/Screen/Touch_Screen/touch_screen.o"
 "Core/Modules/Screen/Touch_Screen/touch_screen_gui_driver.o"
+"Core/Modules/audio_decoder/audio_decoder.o"
 "Core/Src/dma.o"
 "Core/Src/fmc.o"
 "Core/Src/gpio.o"

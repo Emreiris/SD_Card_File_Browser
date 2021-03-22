@@ -24,6 +24,7 @@ RM := rm -rf
 -include Core/lvgl/src/lv_core/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
+-include Core/Modules/audio_decoder/subdir.mk
 -include Core/Modules/Screen/Touch_Screen/subdir.mk
 -include Core/Modules/Screen/Displayer/subdir.mk
 -include Core/Modules/SDRAM/subdir.mk
