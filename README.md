@@ -1,5 +1,5 @@
 
-# SD CARD File Browser Project
+# SD CARD File Browser Project - Under development
 
 Project aims to read/modify/write folders, text files and image files
 on costumized GUI on [STM32F7-Discovery](https://www.st.com/en/evaluation-tools/32f746gdiscovery.html) board.
@@ -18,4 +18,4 @@ New file formats will be addes as project goes on. Modular design approach is ta
 4) Build the project
 5) Load to target machine
 6) Mount the SD-Card to discovery-board.
-
+7) Have fun with files :)

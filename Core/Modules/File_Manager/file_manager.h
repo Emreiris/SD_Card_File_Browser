@@ -18,7 +18,7 @@ typedef struct __file_manager /* struct tag */
 	uint8_t file_disk_status;
 	DIR file_direction;
 	FILINFO file_info;
-	char file_rx_buffer[44];
+	uint8_t file_rx_buffer[44];
 	char file_current_dir[256];
 	uint32_t file_bytes_read;
 	uint32_t file_bytes_write;

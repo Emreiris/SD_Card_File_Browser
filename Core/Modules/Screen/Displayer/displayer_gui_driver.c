@@ -12,7 +12,7 @@
 #include "lvgl.h"
 #include "displayer_gui_driver.h"
 #include "displayer.h"
-#include "sdram.h"
+
 
 static void Displayer_Interface(lv_disp_drv_t * disp, const lv_area_t * area, lv_color_t * color_p);
 

@@ -34,6 +34,10 @@
 #include "lvgl.h"
 #include <file_browser.h>
 #include <file_manager.h>
+
+#include "../Modules/audio_handler/audio_decoder.h"
+#include "file_manager.cpp"
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -60,7 +64,6 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-file_manager_t file_manage;
 /* USER CODE END 0 */
 
 /**
@@ -70,6 +73,9 @@ file_manager_t file_manage;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+#if 0
+	file_manager file_manager;
+#endif
 
   /* USER CODE END 1 */
 
@@ -102,10 +108,6 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   /* Module Initialization */
-  FB_Init();
-  //FB_Main_Screen();
-
-  File_Read(&file_manage, "audio_file.wav");
 
   /* USER CODE END 2 */
 
