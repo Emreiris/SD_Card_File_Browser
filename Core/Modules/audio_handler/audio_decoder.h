@@ -8,7 +8,6 @@
 #ifndef MODULES_AUDIO_HANDLER_AUDIO_DECODER_H_
 #define MODULES_AUDIO_HANDLER_AUDIO_DECODER_H_
 
-#if 0
 #include <stdint.h>
 
 #define BIG_TO_LITTLE(__num__, __swapped__)               \
@@ -35,7 +34,5 @@ typedef struct __audio_file_info
 } audio_file_info_t;
 
 audio_file_info_t Audio_Characterize(uint8_t descriptor[static 44]);
-
-#endif
 
 #endif /* MODULES_AUDIO_HANDLER_AUDIO_DECODER_H_ */

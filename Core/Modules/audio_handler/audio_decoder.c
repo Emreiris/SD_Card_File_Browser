@@ -4,8 +4,6 @@
  *  Created on: Mar 20, 2021
  *      Author: emrei
  */
-
-#if 0
 #include "audio_decoder.h"
 
 #include <stdint.h>
@@ -72,5 +70,3 @@ audio_file_info_t Audio_Characterize(uint8_t descriptor[static 44])
 
 	return audio_info;
 }
-
-#endif

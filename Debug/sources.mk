@@ -30,12 +30,11 @@ CPP_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-Core/Application/Submodules \
-Core/Application \
 Core/Modules/File_Manager \
 Core/Modules/SDRAM \
 Core/Modules/Screen/Displayer \
 Core/Modules/Screen/Touch_Screen \
+Core/Modules/audio_handler \
 Core/Modules_cpp/file_manager_cpp \
 Core/Modules_cpp/sdram_cpp \
 Core/Src \

@@ -1,3 +1,10 @@
+/*
+ * main_cpp.cpp
+ *
+ *  Created on: 9 May 2021
+ *      Author: emrei
+ */
+
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
@@ -32,11 +39,7 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 #include "lvgl.h"
-#include <file_browser.h>
-#include <file_manager.h>
-
-#include "../Modules/audio_handler/audio_decoder.h"
-#include "file_manager.cpp"
+#include "file_manager.hpp"
 
 /* USER CODE END PTD */
 
@@ -73,9 +76,6 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-#if 0
-	file_manager file_manager;
-#endif
 
   /* USER CODE END 1 */
 
@@ -107,7 +107,21 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
-  /* Module Initialization */
+  file_manager  file_test{};
+
+  file_test.set_file_name("test_file.txt");
+
+  file_test.create_file();
+
+  file_test.open_file(WRITE_MODE);
+
+  file_test.write_file("Hello guys");
+
+  file_test.close_file();
+
+  file_test.create_dir("Images");
+
+
 
   /* USER CODE END 2 */
 
@@ -115,7 +129,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  lv_task_handler();
 
     /* USER CODE END WHILE */
 
@@ -193,21 +206,29 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+/* USER CODE END 4 */
+
+ /**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
- /* USER CODE BEGIN Callback 0 */
+  /* USER CODE BEGIN Callback 0 */
 
- /* USER CODE END Callback 0 */
- if (htim->Instance == TIM1)
- {
-	 lv_tick_inc(1);
-	 HAL_IncTick();
- }
- /* USER CODE BEGIN Callback 1 */
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
 
- /* USER CODE END Callback 1 */
+  /* USER CODE END Callback 1 */
 }
-/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.
@@ -242,3 +263,6 @@ void assert_failed(uint8_t *file, uint32_t line)
 #endif /* USE_FULL_ASSERT */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+
+

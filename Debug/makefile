@@ -26,12 +26,11 @@ RM := rm -rf
 -include Core/Src/subdir.mk
 -include Core/Modules_cpp/sdram_cpp/subdir.mk
 -include Core/Modules_cpp/file_manager_cpp/subdir.mk
+-include Core/Modules/audio_handler/subdir.mk
 -include Core/Modules/Screen/Touch_Screen/subdir.mk
 -include Core/Modules/Screen/Displayer/subdir.mk
 -include Core/Modules/SDRAM/subdir.mk
 -include Core/Modules/File_Manager/subdir.mk
--include Core/Application/Submodules/subdir.mk
--include Core/Application/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -97,7 +96,7 @@ main-build: SD_Card_File_System.elf secondary-outputs
 
 # Tool invocations
 SD_Card_File_System.elf: $(OBJS) $(USER_OBJS) D:\Warm\ up\ Projects\Embedded\ Software\ Projects\ST\ Projects\STM32F7\SD_Card_File_Browser\STM32F746NGHX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "SD_Card_File_System.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"D:\Warm up Projects\Embedded Software Projects\ST Projects\STM32F7\SD_Card_File_Browser\STM32F746NGHX_FLASH.ld" -Wl,-Map="SD_Card_File_System.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+	arm-none-eabi-g++ -o "SD_Card_File_System.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"D:\Warm up Projects\Embedded Software Projects\ST Projects\STM32F7\SD_Card_File_Browser\STM32F746NGHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SD_Card_File_System.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

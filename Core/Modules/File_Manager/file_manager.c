@@ -23,11 +23,20 @@
 #include "sdmmc.h"
 #include "file_manager.h"
 
+#if 0
 /*
  * @variable definitions
  */
 
 extern char SDPath[4];
+
+FRESULT fres;
+
+void File_Test()
+{
+
+	/* TODO: Test code will be written.*/
+}
 
 /*
  * @param  = pointer to file_manager_t
@@ -40,12 +49,15 @@ void File_Init(file_manager_t *file_manage)
 	MX_SDMMC1_SD_Init();
 	MX_FATFS_Init();
 	file_manage->file_result = f_mount(&file_manage->drive_handler, SDPath, 0);
+
+#if 0
 	strncpy(file_manage->file_current_dir, SDPath, strlen(SDPath));
 	File_Get_Dir(file_manage);
 	file_manage->file_result = f_opendir(&file_manage->file_direction, file_manage->file_current_dir);
 	File_Get_Dir(file_manage);
 
-	File_Find_File(file_manage);
+#endif
+
 }
 
 /*
@@ -68,15 +80,15 @@ inline void File_Deinit(file_manager_t *file_manage)
 void File_Find_File(file_manager_t *file_manage)
 {
 
-	file_manage->file_result = f_readdir(&file_manage->file_direction, &file_manage->file_info);
+	file_manage->file_result = f_readdir(&file_manage->file_direction, &file_manage->info);
 
-	if( (file_manage->file_result != FR_OK) || (file_manage->file_info.fname[0] == '\0')  )
+	if( (file_manage->file_result != FR_OK) || (file_manage->info.fname[0] == '\0')  )
 	{
-		file_manage->file_counter = 0;
+		file_manage->file_num = 0;
 	}
 	else
 	{
-		++file_manage->file_counter;
+		++file_manage->file_num;
 	}
 
 }
@@ -141,8 +153,8 @@ void File_Get_Dir(file_manager_t *file_manage)
 void File_Create_File(file_manager_t *file_manage,TCHAR *file_name)
 {
 	strcat(file_manage->file_current_dir,"\\");
-	file_manage->file_result = f_open(&file_manage->file_handler, strcat(file_manage->file_current_dir, file_name), FA_CREATE_NEW);
-	file_manage->file_result = f_close(&file_manage->file_handler);
+	file_manage->file_result = f_open(&file_manage->handler, strcat(file_manage->file_current_dir, file_name), FA_CREATE_NEW);
+	file_manage->file_result = f_close(&file_manage->handler);
 	File_Get_Dir(file_manage);
 }
 
@@ -155,9 +167,9 @@ void File_Create_File(file_manager_t *file_manage,TCHAR *file_name)
 
 void File_Read(file_manager_t *file_manage, TCHAR *file_name)
 {
-	file_manage->file_result = f_open(&file_manage->file_handler, file_name, FA_READ);
-	file_manage->file_result = f_read(&file_manage->file_handler,file_manage->file_rx_buffer, sizeof(file_manage->file_rx_buffer), (UINT *)file_manage->file_bytes_read);
-	file_manage->file_result = f_close(&file_manage->file_handler);
+	file_manage->file_result = f_open(&file_manage->handler, file_name, FA_READ);
+	file_manage->file_result = f_read(&file_manage->handler,file_manage->file_rx_buffer, sizeof(file_manage->file_rx_buffer), (UINT *)file_manage->bytes_read);
+	file_manage->file_result = f_close(&file_manage->handler);
 }
 
 /*
@@ -170,9 +182,11 @@ void File_Read(file_manager_t *file_manage, TCHAR *file_name)
 
 void File_Write(file_manager_t *file_manage, TCHAR *file_name,char *data)
 {
-	file_manage->file_result = f_open(&file_manage->file_handler, file_name, FA_OPEN_APPEND|FA_WRITE);
-	file_manage->file_result = f_write(&file_manage->file_handler, data, strlen(data), (UINT *)file_manage->file_bytes_write);
-	file_manage->file_result = f_close(&file_manage->file_handler);
+	file_manage->file_result = f_open(&file_manage->handler, file_name, FA_WRITE| FA_OPEN_APPEND );
+	file_manage->file_result = f_write(&file_manage->handler, data, strlen(data), (UINT *)file_manage->bytes_write);
+	file_manage->file_result = f_close(&file_manage->handler);
 }
 
 #endif /* APPLICATION_FILE_MANAGER_FILE_MANAGER_C_ */
+
+#endif
