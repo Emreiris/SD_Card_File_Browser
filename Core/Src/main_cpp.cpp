@@ -25,6 +25,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+
 #include "main.h"
 #include "dma.h"
 #include "fatfs.h"
@@ -33,13 +34,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <file_manager.hpp>
+#include "lvgl.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#include "lvgl.h"
-#include "file_manager.hpp"
+
 
 /* USER CODE END PTD */
 
@@ -107,21 +108,7 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
-  file_manager  file_test{};
-
-  file_test.set_file_name("test_file.txt");
-
-  file_test.create_file();
-
-  file_test.open_file(WRITE_MODE);
-
-  file_test.write_file("Hello guys");
-
-  file_test.close_file();
-
-  file_test.create_dir("Images");
-
-
+  file_manager file_test{};
 
   /* USER CODE END 2 */
 

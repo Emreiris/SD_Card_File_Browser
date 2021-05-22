@@ -5,8 +5,9 @@
  *      Author: emrei
  */
 
-#ifndef MODULES_CPP_SDRAM_CPP_SDRAM_HPP_
-#define MODULES_CPP_SDRAM_CPP_SDRAM_HPP_
+#ifndef MODULES_CPP_SDRAM_CPP_SDRAM_H_
+#define MODULES_CPP_SDRAM_CPP_SDRAM_H_
+
 #include "fmc.h"
 
 #define SDRAM_BANK_ADDR                  ((uint32_t)0xC0000000)
@@ -46,4 +47,4 @@ private:
 
 
 
-#endif /* MODULES_CPP_SDRAM_CPP_SDRAM_HPP_ */
+#endif /* MODULES_CPP_SDRAM_CPP_SDRAM_H_ */

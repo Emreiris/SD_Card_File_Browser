@@ -9,7 +9,7 @@
 
 #include "fatfs.h"
 #include <stdint.h>
-#include <vector>
+#include <string>
 
 
 #define RX_BUF_SIZE (16)
@@ -20,9 +20,9 @@ typedef enum
 	READ_MODE  = 2
 }file_open_mode;
 
-class file_attributes
+struct file_attributes
 {
-public:
+protected:
 	FATFS drive_handler;
 	FIL handler;
 	FRESULT result;
@@ -38,33 +38,30 @@ public:
 };
 
 
-class file_manager
+class file_manager: public file_attributes
 {
 public:
 
-
 	file_manager();
-
 	~file_manager();
 
 	void search_files();
 
-	void create_dir(TCHAR *dir);
-	void change_dir(TCHAR *dir);
+	void create_dir(const char* dir);
+	void change_dir(const char* dir);
 	void get_dir();
 
 	void create_file();
 	void open_file(file_open_mode mode);
 	void close_file();
 	void read_file();
-	void write_file(TCHAR* data);
+	void write_file(const char* data);
 
-	void set_file_name(TCHAR *file_name);  /* getter function */
-	TCHAR* get_file_name();                /* setter function */
+	void set_file_name(std::string file_name);  /* getter function */
+	char* get_file_name();                /* setter function */
 
 private:
-	TCHAR *file_name;
-	file_attributes *file_handle = new file_attributes();
+	char* file_name;
 
 };
 
