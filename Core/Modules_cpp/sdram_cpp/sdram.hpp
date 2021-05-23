@@ -38,9 +38,9 @@ public:
 	}
 
 	void init();
-	void init_sequence();
+	void init_sequence(SDRAM_HandleTypeDef *sdram_handle, FMC_SDRAM_CommandTypeDef *command);
 private:
-	SDRAM_HandleTypeDef sdram_handle;
+	SDRAM_HandleTypeDef hsdram1;
 	FMC_SDRAM_CommandTypeDef *command;
 	static int entity_counter;
 };

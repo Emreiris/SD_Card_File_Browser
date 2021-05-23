@@ -178,6 +178,8 @@
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules/audio_handler}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules_cpp/file_manager_cpp}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules_cpp/screen_cpp}&quot;"/>
                                     								
                                 </option>
                                 								

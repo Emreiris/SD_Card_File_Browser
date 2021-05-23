@@ -7,6 +7,8 @@
 "Core/Modules/audio_handler/audio_decoder.o"
 "Core/Modules/audio_handler/audio_speaker_handler.o"
 "Core/Modules_cpp/file_manager_cpp/file_manager.o"
+"Core/Modules_cpp/screen_cpp/displayer.o"
+"Core/Modules_cpp/screen_cpp/displayer_gui_driver.o"
 "Core/Modules_cpp/sdram_cpp/sdram.o"
 "Core/Src/dma.o"
 "Core/Src/fmc.o"

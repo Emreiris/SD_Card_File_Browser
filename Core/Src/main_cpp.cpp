@@ -34,8 +34,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
 #include <file_manager.hpp>
 #include "lvgl.h"
+#include "displayer_gui_driver.hpp"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -108,7 +111,14 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
-  file_manager file_test{};
+  displayer_gui_driver gui;
+
+  gui.gui_init();
+
+  lv_obj_t* btn = lv_btn_create(lv_scr_act(), NULL);
+
+  lv_obj_set_pos(btn, 10, 10);
+
 
   /* USER CODE END 2 */
 
@@ -116,6 +126,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+	  lv_task_handler();
 
     /* USER CODE END WHILE */
 
@@ -211,6 +223,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM1) {
     HAL_IncTick();
+    lv_tick_inc(1);
   }
   /* USER CODE BEGIN Callback 1 */
 

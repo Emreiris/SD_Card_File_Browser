@@ -36,6 +36,7 @@ Core/Modules/Screen/Displayer \
 Core/Modules/Screen/Touch_Screen \
 Core/Modules/audio_handler \
 Core/Modules_cpp/file_manager_cpp \
+Core/Modules_cpp/screen_cpp \
 Core/Modules_cpp/sdram_cpp \
 Core/Src \
 Core/Startup \

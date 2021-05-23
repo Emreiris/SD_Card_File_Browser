@@ -20,28 +20,15 @@ typedef enum
 	READ_MODE  = 2
 }file_open_mode;
 
-struct file_attributes
-{
-protected:
-	FATFS drive_handler;
-	FIL handler;
-	FRESULT result;
-	uint8_t disk_status;
-	DIR direction;
-	FILINFO info;
-	char current_dir[256];
-	uint8_t rx_buffer[RX_BUF_SIZE];
-	uint32_t bytes_read;
-	uint32_t bytes_write;
-	size_t num;
 
-};
-
-
-class file_manager: public file_attributes
+class file_manager
 {
 public:
-
+	uint8_t rx_buffer[RX_BUF_SIZE];
+	char current_dir[256]; /* Long File Support */
+	size_t file_count;
+	FRESULT result;
+	FILINFO info;
 	file_manager();
 	~file_manager();
 
@@ -57,11 +44,19 @@ public:
 	void read_file();
 	void write_file(const char* data);
 
-	void set_file_name(std::string file_name);  /* getter function */
-	char* get_file_name();                /* setter function */
+	void set_file_name(std::string file_name) { this->file_name = &file_name[0]; }
+	char* get_file_name() { return this->file_name; }
 
 private:
+	FATFS drive_handler;
+	FIL handler;
+	uint8_t disk_status;
+	DIR direction;
+protected:
 	char* file_name;
+	uint32_t bytes_read;
+	uint32_t bytes_write;
+
 
 };
 
