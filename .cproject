@@ -107,21 +107,17 @@
                                     									
                                     <listOptionValue builtIn="false" value="../Middlewares/Third_Party/FatFs/src"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules/Screen/Displayer}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules/Screen/Touch_Screen}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules/SDRAM}&quot;"/>
-                                    									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Inc}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="../Core/Inc"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules/File_Manager}&quot;"/>
-                                    									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules_cpp/sdram_cpp}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules_cpp/file_manager_cpp}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules_cpp/screen_cpp/displayer}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="/SD_Card_File_System/Core/Modules_cpp/screen_cpp/touch_screen"/>
                                     								
                                 </option>
                                 								
@@ -153,33 +149,25 @@
                                     									
                                     <listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/lvgl}&quot;"/>
-                                    									
                                     <listOptionValue builtIn="false" value="../FATFS/App"/>
                                     									
                                     <listOptionValue builtIn="false" value="../FATFS/Target"/>
                                     									
                                     <listOptionValue builtIn="false" value="../Middlewares/Third_Party/FatFs/src"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules/Screen/Displayer}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules/Screen/Touch_Screen}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules/SDRAM}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Inc}&quot;"/>
-                                    									
                                     <listOptionValue builtIn="false" value="../Core/Inc"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules/File_Manager}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules_cpp/sdram_cpp}&quot;"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules/audio_handler}&quot;"/>
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules_cpp/file_manager_cpp}&quot;"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules_cpp/screen_cpp}&quot;"/>
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules_cpp/screen_cpp/displayer}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules_cpp/screen_cpp/touch_screen}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/Modules_cpp/sdram_cpp}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SD_Card_File_System/Core/lvgl}&quot;"/>
                                     								
                                 </option>
                                 								

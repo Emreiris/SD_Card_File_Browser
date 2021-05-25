@@ -25,7 +25,8 @@ RM := rm -rf
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include Core/Modules_cpp/sdram_cpp/subdir.mk
--include Core/Modules_cpp/screen_cpp/subdir.mk
+-include Core/Modules_cpp/screen_cpp/touch_screen/subdir.mk
+-include Core/Modules_cpp/screen_cpp/displayer/subdir.mk
 -include Core/Modules_cpp/file_manager_cpp/subdir.mk
 -include Core/Modules/audio_handler/subdir.mk
 -include Core/Modules/Screen/Touch_Screen/subdir.mk
