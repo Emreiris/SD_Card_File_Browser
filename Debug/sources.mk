@@ -41,6 +41,7 @@ Core/Modules_cpp/screen_cpp/touch_screen \
 Core/Modules_cpp/sdram_cpp \
 Core/Src \
 Core/Startup \
+Core/app \
 Core/lvgl/src/lv_core \
 Core/lvgl/src/lv_draw \
 Core/lvgl/src/lv_font \

@@ -22,6 +22,7 @@ RM := rm -rf
 -include Core/lvgl/src/lv_font/subdir.mk
 -include Core/lvgl/src/lv_draw/subdir.mk
 -include Core/lvgl/src/lv_core/subdir.mk
+-include Core/app/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include Core/Modules_cpp/sdram_cpp/subdir.mk

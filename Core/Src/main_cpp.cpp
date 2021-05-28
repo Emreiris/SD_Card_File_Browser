@@ -111,16 +111,6 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
-  displayer_gui_driver gui;
-  touch_screen_gui_driver ts;
-
-  gui.gui_init();
-  ts.ts_init();
-
-  lv_obj_t* btn = lv_btn_create(lv_scr_act(), NULL);
-
-  lv_obj_set_pos(btn, 10, 10);
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
