@@ -10,16 +10,16 @@
 
 #include "event_handler.hpp"
 #include "lvgl.h"
+#include "ui_components.hpp"
 
-class application: public event_handler
+class application: public event_handler, ui_components
 {
 public:
 	void app_init();
 	void app_run();
 	void app_get_files();
 private:
-	lv_obj_t* file_list;
-	lv_obj_t* file_search_ta;
+
 };
 
 

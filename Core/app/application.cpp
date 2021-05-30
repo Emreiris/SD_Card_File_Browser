@@ -13,15 +13,16 @@
 static displayer_gui_driver gui;
 static touch_screen_gui_driver ts;
 
+#define test_screen lv_scr_act()
 
 void application::app_init()
 {
 	gui.gui_init();
 	ts.ts_init();
 
-	file_search_ta = lv_textarea_create(lv_scr_act());
-	lv_obj_set_pos(file_search_ta, 5, 5);
-	lv_obj_set_size(file_search_ta, lv_pct(95), lv_pct(15));
+	search_bar_create();
+	file_list_create();
+
 
 }
 
