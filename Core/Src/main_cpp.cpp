@@ -37,8 +37,8 @@
 
 #include <file_manager.hpp>
 #include "lvgl.h"
-#include "displayer_gui_driver.hpp"
-#include "touch_screen_gui_driver.hpp"
+#include "app/application.hpp"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -70,7 +70,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+application app;
 /* USER CODE END 0 */
 
 /**
@@ -111,6 +111,7 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
+  app.app_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
