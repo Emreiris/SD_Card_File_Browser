@@ -26,9 +26,7 @@
 
 extern char SDPath[4];
 
-file_manager::file_manager():  rx_buffer{0}, current_dir{},
-							   file_count(0),file_name{0},
-		                       bytes_read(0), bytes_write(0)
+void file_manager::file_manager_init()
 {
 	MX_SDMMC1_SD_Init();  /* Low level driver initalizations */
 	MX_FATFS_Init();      /* File system initalizations */
@@ -40,26 +38,37 @@ file_manager::file_manager():  rx_buffer{0}, current_dir{},
 }
 
 
-file_manager::~file_manager()
+void file_manager::file_manager_deinit()
 {
 	f_mount(0, SDPath, 0);
 }
 
-
-
 void file_manager::search_files()
 {
+	static bool process = false;
 
-	result = f_readdir(&direction, &info);
-
-	if( (result != FR_OK) || (info.fname[0] == '\0')  )
+	if(process == false )
 	{
-		file_count = 0;
+		result = f_findfirst(&direction, &info, current_dir,
+							 "*.txt");
+		process = true;
+		isfound = FILE_FOUND;
+		return;
+	}
+
+	if( (result == FR_OK) and (info.fname[0] != '\0'))
+	{
+		isfound = FILE_FOUND;
+		f_findnext(&direction, &info);
 	}
 	else
 	{
-		++file_count;
+		process = false;
+		isfound = FILE_NOTFOUND;
 	}
+
+
+
 }
 
 

@@ -43,6 +43,7 @@ RM := rm -rf
 -include Core/lvgl/src/extra/subdir.mk
 -include Core/lvgl/src/draw/subdir.mk
 -include Core/lvgl/src/core/subdir.mk
+-include Core/app/windows/subdir.mk
 -include Core/app/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk

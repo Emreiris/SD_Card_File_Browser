@@ -37,6 +37,7 @@ Core/Modules_cpp/sdram_cpp \
 Core/Src \
 Core/Startup \
 Core/app \
+Core/app/windows \
 Core/lvgl/src/core \
 Core/lvgl/src/draw \
 Core/lvgl/src/extra/layouts/flex \

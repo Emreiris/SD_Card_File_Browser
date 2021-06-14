@@ -24,7 +24,6 @@ void displayer_gui_driver::gui_init()
 
 	static lv_disp_draw_buf_t disp_buf;
 	static lv_disp_drv_t disp_drv;
-
 	static lv_color_t buf_1[DISPLAY_HOR * 10];
 
 	lv_disp_draw_buf_init(&disp_buf, buf_1, NULL, DISPLAY_HOR*10);
@@ -44,7 +43,7 @@ void displayer_gui_driver::gui_init()
 
 void displayer_gui_driver::displayer_interface(lv_disp_drv_t *disp,const lv_area_t* area,lv_color_t* color_p)
 {
-    int32_t x, y;
+    static int32_t x, y;
 
     for(y = area->y1; y <= area->y2; y++)
     {

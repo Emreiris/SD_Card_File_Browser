@@ -20,6 +20,12 @@ typedef enum
 	READ_MODE  = 2
 }file_open_mode;
 
+typedef enum
+{
+	FILE_FOUND = 3,
+	FILE_NOTFOUND = 4
+}file_find;
+
 
 class file_manager
 {
@@ -29,8 +35,11 @@ public:
 	size_t file_count;
 	FRESULT result;
 	FILINFO info;
-	file_manager();
-	~file_manager();
+	file_find isfound;
+	char current_file_name[30];
+
+	void file_manager_init();
+	void file_manager_deinit();
 
 	void search_files();
 
@@ -52,6 +61,7 @@ private:
 	FIL handler;
 	uint8_t disk_status;
 	DIR direction;
+	static constexpr char file_extensions[3][10] = {".txt", "", ".bmp"};
 protected:
 	char* file_name;
 	uint32_t bytes_read;
