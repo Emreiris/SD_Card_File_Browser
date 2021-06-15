@@ -33,14 +33,14 @@ private:
 	/* main_window widgets created, only needs to be */
 	void search_file_create();
 	void file_list_create();
+	lv_obj_t* get_screen() { return lv_scr_act();}
 
 	/* runtime event creators */
-
-
 	lv_obj_t* main_screen;
 	lv_obj_t* file_search;
 	lv_obj_t* file_list;
 	lv_obj_t* list_button;
+
 
 };
 
