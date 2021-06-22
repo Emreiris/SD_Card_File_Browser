@@ -26,6 +26,7 @@
 
 extern char SDPath[4];
 
+
 void file_manager::file_manager_init()
 {
 	MX_SDMMC1_SD_Init();  /* Low level driver initalizations */
@@ -34,6 +35,7 @@ void file_manager::file_manager_init()
 	result = f_mount(&drive_handler, SDPath, 0);
 
 	result = f_opendir(&direction, SDPath); /* simple workaround */
+
 	strncpy(current_dir, SDPath, strlen(SDPath));
 }
 
@@ -43,44 +45,59 @@ void file_manager::file_manager_deinit()
 	f_mount(0, SDPath, 0);
 }
 
+
 void file_manager::search_files()
 {
-	static bool process = false;
+	static bool first_run = true;
 
-	if(process == false )
+	if(first_run == true )
 	{
-		result = f_findfirst(&direction, &info, current_dir,
-							 "*.txt");
-		process = true;
-		isfound = FILE_FOUND;
+		/*aggresive searching for all files at current direction */
+		result = f_findfirst(&direction, &info, current_dir,"*");
+		first_run = false;
+
+		if( (result == FR_OK) && (info.fname[0] != '\0') )
+		{
+			current_file_name = &info.fname[0]; //(current_file_name, &info.fname[0]);
+			isfound = FILE_FOUND;
+		}
+		else
+		{
+			*current_file_name = '\0';
+			isfound = FILE_NOTFOUND;
+			first_run = true;
+		}
+
 		return;
 	}
 
-	if( (result == FR_OK) and (info.fname[0] != '\0'))
+	if( isfound == FILE_FOUND )
 	{
-		isfound = FILE_FOUND;
 		f_findnext(&direction, &info);
+
+		if( (result == FR_OK) && (info.fname[0] != '\0') )
+		{
+			current_file_name = &info.fname[0]; //strncpy(current_file_name, &info.fname[0], 30);
+			isfound = FILE_FOUND;
+		}
+		else
+		{
+			*current_file_name = '\0';
+			first_run = true;
+			isfound = FILE_NOTFOUND;
+		}
 	}
-	else
-	{
-		process = false;
-		isfound = FILE_NOTFOUND;
-	}
-
-
-
 }
 
 
 void file_manager::create_file()
 {
-
 	result = f_open(&handler, strcat(strcat(current_dir, "/"), this->file_name), FA_CREATE_NEW);
 	result = f_close(&handler);
 
 	get_dir();
-
 }
+
 
 void file_manager::open_file(file_open_mode mode)
 {
@@ -93,7 +110,6 @@ void file_manager::open_file(file_open_mode mode)
 		result = f_open(&handler, file_manager::get_file_name(), FA_READ);
 		break;
 	}
-
 }
 
 
@@ -115,36 +131,32 @@ void file_manager::write_file(const char* data)
 }
 
 
-
 void file_manager::create_dir(const char* dir)
 {
+	static char temp_buf[256]; /* waste of memory, I need to find a better way.*/
 
 	get_dir();
-
-	static char temp_buf[256]; /* waste of memory, I need to find a better way.*/
 
 	strncpy(temp_buf, current_dir, strlen(current_dir));
 
 	result = f_mkdir(strcat(strcat(temp_buf, "/"), dir));
-
 }
+
 
 void file_manager::get_dir()
 {
-
 	static char temp_buf[256]; /* I am sure there is a better way that I could not see yet. */
-	static UINT len = 0;
 
-	result = f_getcwd(temp_buf, len);
+	result = f_getcwd(temp_buf, UINT{0});
 
-	strncpy(current_dir, temp_buf, len);
-
+	strncpy(current_dir, temp_buf, UINT{0});
 }
+
 
 void file_manager::change_dir(const char* dir)
 {
-
 	get_dir();
+
 	strcat(current_dir, "/");
 	strcat(current_dir, dir);
 
@@ -152,6 +164,4 @@ void file_manager::change_dir(const char* dir)
 
 	get_dir();
 }
-
-
 

@@ -32,11 +32,10 @@ class file_manager
 public:
 	uint8_t rx_buffer[RX_BUF_SIZE];
 	char current_dir[256]; /* Long File Support */
-	size_t file_count;
 	FRESULT result;
 	FILINFO info;
 	file_find isfound;
-	char current_file_name[30];
+	char* current_file_name;
 
 	void file_manager_init();
 	void file_manager_deinit();

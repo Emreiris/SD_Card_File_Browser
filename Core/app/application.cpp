@@ -12,10 +12,15 @@
 #include "./windows/main_window.hpp"
 
 #include "lvgl.h"
+#include <list>
+#include <string>
 
 static displayer_gui_driver gui;
 static touch_screen_gui_driver ts;
 file_manager fm;
+
+/* Add file extention to list */
+
 
 
 void application::app_init()
@@ -27,6 +32,8 @@ void application::app_init()
 	fm.file_manager_init();
 
 	mw.create_window();
+
+	mw.refresh_file_list();
 }
 
 void application::app_run()
