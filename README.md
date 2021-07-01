@@ -19,3 +19,6 @@ New file formats will be addes as project goes on. Modular design approach is ta
 5) Load to target machine
 6) Mount the SD-Card to discovery-board.
 7) Have fun with files :)
+
+# NOTE
+Project is suspended to unknown date, developer needs to focus different areas.

@@ -7,30 +7,48 @@
 
 #include "main_window.hpp"
 #include "file_manager.hpp"
+
 #include <map>
 #include <string>
+#include <algorithm>
+#include <locale>
+
 extern file_manager fm;
 
 /* supported file extensions */
-enum class file_types
+enum file_types
 {
-	TXT_FILE = 1,
-	BMP_FILE = 2
+
+	BMP_FILE     = 2,
+	UNKNOWN_FILE = 3,
+	TXT_FILE     = 1
 };
 
-std::map<file_types, std::string> file_pairs = {{file_types::TXT_FILE, ".txt"},
-									            {file_types::BMP_FILE, ".bmp"}};
+file_types current_file_type = file_types::UNKNOWN_FILE;
+
+std::map<file_types, const char*> file_pairs = {{file_types::BMP_FILE, ".bmp"},
+												{file_types::TXT_FILE, ".txt"}
+									            };
+
+
+static void detect_file_type(const char* file_name);
+
+
 
 main_window::main_window()
 {
 
 }
 
+
+
 void main_window::create_window()
 {
 	file_list_create();
 	search_file_create();
 }
+
+
 
 void main_window::search_file_create()
 {
@@ -41,12 +59,16 @@ void main_window::search_file_create()
 	lv_textarea_set_cursor_click_pos(file_search, true);
 }
 
+
+
 void main_window::file_list_create()
 {
 	file_list = lv_list_create(get_screen());
 	lv_obj_set_pos(file_list, 5,2+lv_pct(15));
 	lv_obj_set_size(file_list,lv_pct(98),lv_pct(85)-7);
 }
+
+
 
 void main_window::refresh_file_list()
 {
@@ -58,7 +80,7 @@ void main_window::refresh_file_list()
 			break;
 
 		list_button = lv_list_add_btn(file_list, LV_SYMBOL_FILE, fm.current_file_name);
-		lv_obj_add_event_cb(list_button, button_event_handler, LV_EVENT_CLICKED, NULL);
+		lv_obj_add_event_cb(list_button, button_event_handler, LV_EVENT_CLICKED, nullptr);
 		lv_task_handler();
 	}
 	while(1);
@@ -72,7 +94,27 @@ void button_event_handler(lv_event_t * e)
 	lv_obj_t*        obj = lv_event_get_target(e);
 	if( code == LV_EVENT_CLICKED )
 	{
-
+		detect_file_type(lv_list_get_btn_text(NULL, obj));
 	}
 
 }
+
+static void detect_file_type(const char* file_name)
+{
+
+	std::locale locale1, locale2;
+
+	for(const auto& [file_type_enum, file_extent] : file_pairs)
+	{
+		if(strstr(file_name,file_extent))
+		{
+			current_file_type = file_type_enum;
+		}
+		else
+		{
+			current_file_type = file_types::UNKNOWN_FILE;
+		}
+	}
+
+}
+
