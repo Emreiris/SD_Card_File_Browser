@@ -21,6 +21,7 @@
 "Core/Src/tim.o"
 "Core/Startup/startup_stm32f746nghx.o"
 "Core/app/application.o"
+"Core/app/detect_file.o"
 "Core/app/windows/main_window.o"
 "Core/lvgl/src/core/lv_disp.o"
 "Core/lvgl/src/core/lv_event.o"

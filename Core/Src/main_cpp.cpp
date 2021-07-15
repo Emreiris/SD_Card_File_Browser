@@ -37,7 +37,7 @@
 
 #include "lvgl.h"
 #include "app/application.hpp"
-
+#include "file_manager.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,7 +69,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-application app;
+
 /* USER CODE END 0 */
 
 /**
@@ -79,6 +79,7 @@ application app;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	static application app;
 
   /* USER CODE END 1 */
 
@@ -109,15 +110,19 @@ int main(void)
   MX_DMA_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
   app.app_init();
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  app.app_run();
+
 	  lv_task_handler();
+
 
     /* USER CODE END WHILE */
 

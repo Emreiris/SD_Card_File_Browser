@@ -149,7 +149,7 @@ void file_manager::get_dir()
 
 	result = f_getcwd(temp_buf, UINT{0});
 
-	strncpy(current_dir, temp_buf, UINT{0});
+	strncpy(current_dir, temp_buf, strlen(temp_buf));
 }
 
 

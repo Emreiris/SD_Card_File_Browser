@@ -9,26 +9,24 @@
 #define APP_WINDOWS_MAIN_WINDOW_HPP_
 
 #include "lvgl.h"
-
+#include <map>
+#include <string>
+#include "../detect_file.hpp"
 
 void button_event_handler(lv_event_t * e);
 
-class main_window
+class main_window: public detect_file
 {
 public:
 	main_window();
-
 	void create_window();
-
 	void refresh_file_list();
-
+	friend void button_event_handler(lv_event_t * e);
 private:
 
-	friend void button_event_handler(lv_event_t * e);
 	void search_file_create();
 	void file_list_create();
 	lv_obj_t* get_screen() { return lv_scr_act();}
-
 	lv_obj_t* main_screen;
 	lv_obj_t* file_search;
 	lv_obj_t* file_list;
