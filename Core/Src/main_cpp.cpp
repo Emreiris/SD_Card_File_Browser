@@ -79,7 +79,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	static application app;
+	static  app::application app;
 
   /* USER CODE END 1 */
 

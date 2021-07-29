@@ -13,7 +13,6 @@
 #include <string>
 #include "../detect_file.hpp"
 
-void button_event_handler(lv_event_t * e);
 
 class main_window: public detect_file
 {

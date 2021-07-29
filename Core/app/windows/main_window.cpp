@@ -24,7 +24,6 @@ void main_window::create_window()
 }
 
 
-
 void main_window::search_file_create()
 {
 	file_search = lv_textarea_create(get_screen());
@@ -54,7 +53,7 @@ void main_window::refresh_file_list()
 			break;
 
 		list_button = lv_list_add_btn(file_list, LV_SYMBOL_FILE, fm.current_file_name);
-		lv_obj_add_event_cb(list_button,button_event_handler,LV_EVENT_CLICKED, nullptr);
+		//lv_obj_add_event_cb(list_button,button_event_handler,LV_EVENT_CLICKED, nullptr);
 		lv_task_handler();
 	}
 	while(1);

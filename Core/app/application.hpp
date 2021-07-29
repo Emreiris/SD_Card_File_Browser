@@ -9,6 +9,12 @@
 #define APP_APPLICATION_HPP_
 
 #include "./windows/main_window.hpp"
+#include "displayer_gui_driver.hpp"
+#include "touch_screen_gui_driver.hpp"
+
+namespace app
+{
+
 
 class application
 {
@@ -16,11 +22,12 @@ public:
 	void app_init();
 	void app_run();
 private:
-
-	main_window mw;
+	static inline gui::displayer_gui_driver gui;
+	static inline gui::touch_screen_gui_driver ts;
+	static inline main_window mw;
 
 };
 
-
+}
 
 #endif /* APP_APPLICATION_HPP_ */

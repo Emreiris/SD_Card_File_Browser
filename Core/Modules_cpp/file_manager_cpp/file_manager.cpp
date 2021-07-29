@@ -99,7 +99,7 @@ void file_manager::create_file()
 }
 
 
-void file_manager::open_file(file_open_mode mode)
+void file_manager::open_file(file_open_mode& mode)
 {
 	switch(mode)
 	{

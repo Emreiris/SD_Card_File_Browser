@@ -9,9 +9,11 @@
 #define MODULES_CPP_SCREEN_CPP_TOUCH_SCREEN_TOUCH_SCREEN_HPP_
 
 #include <stdint.h>
+#include "touch_screen_reglist.hpp"
 
-
-class touch_screen  /* It is really small class :)*/
+namespace driver
+{
+class touch_screen: public touch_screen_reglist
 {
 public:
 	bool is_pressed();
@@ -19,6 +21,6 @@ public:
 
 };
 
-
+}
 
 #endif /* MODULES_CPP_SCREEN_CPP_TOUCH_SCREEN_TOUCH_SCREEN_HPP_ */

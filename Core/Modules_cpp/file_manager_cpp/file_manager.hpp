@@ -47,12 +47,12 @@ public:
 	void get_dir();
 
 	void create_file();
-	void open_file(file_open_mode mode);
+	void open_file(file_open_mode& mode);
 	void close_file();
 	void read_file();
 	void write_file(const char* data);
 
-	void set_file_name(std::string file_name) { this->file_name = &file_name[0]; }
+	void set_file_name(std::string& file_name) { this->file_name = &file_name[0]; }
 	char* get_file_name() { return this->file_name; }
 
 private:
@@ -60,12 +60,10 @@ private:
 	FIL handler;
 	uint8_t disk_status;
 	DIR direction;
-	static constexpr char file_extensions[3][10] = {".txt", "", ".bmp"};
-protected:
+
 	char* file_name;
 	uint32_t bytes_read;
 	uint32_t bytes_write;
-
 
 };
 

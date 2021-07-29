@@ -8,14 +8,12 @@
 #include "displayer_gui_driver.hpp"
 #include "lvgl.h"
 
-#define DISPLAY_HOR (480)
-#define DISPLAY_VER (272)
-
-static displayer display;
+namespace gui
+{
 
 void displayer_gui_driver::gui_init()
 {
-	static sdram_handler sdram;
+
 
 	sdram.init();
 	display.init();
@@ -24,15 +22,15 @@ void displayer_gui_driver::gui_init()
 
 	static lv_disp_draw_buf_t disp_buf;
 	static lv_disp_drv_t disp_drv;
-	static lv_color_t buf_1[DISPLAY_HOR * 10];
+	static lv_color_t buf_1[display.displayer_width * 10];
 
-	lv_disp_draw_buf_init(&disp_buf, buf_1, NULL, DISPLAY_HOR*10);
+	lv_disp_draw_buf_init(&disp_buf, buf_1, NULL, display.displayer_width*10);
 
 	lv_disp_drv_init(&disp_drv);
 
 	disp_drv.draw_buf = &disp_buf;
-	disp_drv.hor_res = DISPLAY_HOR;
-	disp_drv.ver_res = DISPLAY_VER;
+	disp_drv.hor_res =  display.displayer_width;
+	disp_drv.ver_res =  display.displayer_height;
 	disp_drv.flush_cb = this->displayer_interface;
 
 	lv_disp_drv_register(&disp_drv);
@@ -57,3 +55,4 @@ void displayer_gui_driver::displayer_interface(lv_disp_drv_t *disp,const lv_area
     lv_disp_flush_ready(disp);
 }
 
+}

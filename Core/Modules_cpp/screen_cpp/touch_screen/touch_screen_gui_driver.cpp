@@ -9,6 +9,9 @@
 #include "lvgl.h"
 #include "i2c.h"
 
+namespace gui
+{
+
 void touch_screen_gui_driver::ts_init()
 {
 
@@ -23,7 +26,7 @@ void touch_screen_gui_driver::ts_init()
 
 void touch_screen_gui_driver::ts_interface(struct _lv_indev_drv_t * indev, lv_indev_data_t * data)
 {
-	static touch_screen ts;
+
 	uint16_t ts_x;
 	uint16_t ts_y;
 
@@ -39,4 +42,5 @@ void touch_screen_gui_driver::ts_interface(struct _lv_indev_drv_t * indev, lv_in
 
 }
 
+}
 

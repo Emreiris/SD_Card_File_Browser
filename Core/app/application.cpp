@@ -15,22 +15,23 @@
 #include <list>
 #include <string>
 
-static displayer_gui_driver gui;
-static touch_screen_gui_driver ts;
-file_manager fm;
+namespace app
+{
+
 
 
 void application::app_init()
 {
-
-
 	gui.gui_init();
+
 	ts.ts_init();
-	fm.file_manager_init();
 
-	mw.create_window();
+	lv_obj_t* button = lv_btn_create(lv_scr_act());
 
-	mw.refresh_file_list();
+	lv_obj_set_pos(button, 10, 10);
+	lv_obj_set_size(button, 100, 40);
+
+
 }
 
 void application::app_run()
@@ -40,4 +41,5 @@ void application::app_run()
 
 }
 
+}
 

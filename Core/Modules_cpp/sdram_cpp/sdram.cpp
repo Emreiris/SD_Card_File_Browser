@@ -8,6 +8,10 @@
 #include <sdram.hpp>
 #include "fmc.h"
 
+
+namespace driver
+{
+
 void sdram_handler::init()
 {
 
@@ -19,11 +23,11 @@ void sdram_handler::init()
     hsdram1.Init.SDBank = FMC_SDRAM_BANK1;
     hsdram1.Init.ColumnBitsNumber = FMC_SDRAM_COLUMN_BITS_NUM_8;
     hsdram1.Init.RowBitsNumber = FMC_SDRAM_ROW_BITS_NUM_12;
-    hsdram1.Init.MemoryDataWidth = FMC_SDRAM_MEM_BUS_WIDTH_16;
+    hsdram1.Init.MemoryDataWidth = memory_width;
     hsdram1.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_2;
     hsdram1.Init.CASLatency = FMC_SDRAM_CAS_LATENCY_2;
     hsdram1.Init.WriteProtection = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
-    hsdram1.Init.SDClockPeriod = FMC_SDRAM_CLOCK_PERIOD_2;
+    hsdram1.Init.SDClockPeriod = clock_period;
     hsdram1.Init.ReadBurst = FMC_SDRAM_RBURST_ENABLE;
     hsdram1.Init.ReadPipeDelay = FMC_SDRAM_RPIPE_DELAY_0;
 
@@ -51,38 +55,34 @@ void sdram_handler::init_sequence(SDRAM_HandleTypeDef *sdram_handle,
 	  command->AutoRefreshNumber = 1;
 	  command->ModeRegisterDefinition = 0;
 
-	  HAL_SDRAM_SendCommand(sdram_handle, command, SDRAM_TIMEOUT);
-
-	  HAL_Delay(1);
+	  HAL_SDRAM_SendCommand(sdram_handle, command, timeout);
 
 	  command->CommandMode = FMC_SDRAM_CMD_PALL;
 	  command->CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
 	  command->AutoRefreshNumber = 1;
 	  command->ModeRegisterDefinition = 0;
 
-	  HAL_SDRAM_SendCommand(sdram_handle, command, SDRAM_TIMEOUT);
+	  HAL_SDRAM_SendCommand(sdram_handle, command, timeout);
 
 	  command->CommandMode = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
 	  command->CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
 	  command->AutoRefreshNumber = 8;
 	  command->ModeRegisterDefinition = 0;
 
-	  HAL_SDRAM_SendCommand(sdram_handle, command, SDRAM_TIMEOUT);
+	  HAL_SDRAM_SendCommand(sdram_handle, command, timeout);
 
-	  temp_val = (uint32_t)SDRAM_MODEREG_BURST_LENGTH_1          |
-	                       SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL   |
-	                       SDRAM_MODEREG_CAS_LATENCY_2           |
-	                       SDRAM_MODEREG_OPERATING_MODE_STANDARD |
-	                       SDRAM_MODEREG_WRITEBURST_MODE_SINGLE;
+	  temp_val = (uint32_t)burst_length|burst_type_seq|cas_latency| \
+			  	  	  	   operating_mode_standart|writeburst_mode_single;
 
 	  command->CommandMode = FMC_SDRAM_CMD_LOAD_MODE;
 	  command->CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
 	  command->AutoRefreshNumber = 1;
 	  command->ModeRegisterDefinition = temp_val;
 
-	  HAL_SDRAM_SendCommand(sdram_handle, command, SDRAM_TIMEOUT);
-	  HAL_SDRAM_SetAutoRefreshNumber(&hsdram1, SDRAM_REFRESH_TIME);
+	  HAL_SDRAM_SendCommand(sdram_handle, command, timeout);
+	  HAL_SDRAM_SetAutoRefreshNumber(&hsdram1, refresh_time);
 
 }
 
+}
 
