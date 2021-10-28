@@ -19,12 +19,15 @@ namespace app
 class application
 {
 public:
+
+	application();
+
+
 	void app_init();
 	void app_run();
 private:
-	static inline gui::displayer_gui_driver gui;
-	static inline gui::touch_screen_gui_driver ts;
-	static inline main_window mw;
+	 gui::displayer_gui_driver *gui;
+	 gui::touch_screen_gui_driver *ts;
 
 };
 

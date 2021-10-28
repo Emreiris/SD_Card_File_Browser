@@ -6,71 +6,91 @@
  */
 
 #include "main_window.hpp"
-#include "file_manager.hpp"
 
-extern file_manager fm;
-
-void detect_file_type(std::string file_name);
-
-main_window::main_window()
+namespace gui
 {
+
+main_window::main_window()//:screen(lv_obj_create(NULL))
+{
+	screen = lv_obj_create(NULL);
+
+	screen_width  = lv_obj_get_content_width(screen);
+	screen_height = lv_obj_get_content_height(screen);
+
+	create_text_input();
+	create_search_button();
+	//create_file_window();
+	create_file_list();
+	//create_keyboard();
+}
+
+void main_window::create_text_input()
+{
+	text_input = lv_textarea_create(screen);
+	lv_textarea_set_placeholder_text(text_input, "Enter Filename");
+	lv_textarea_set_max_length(text_input, 32);
+	lv_obj_set_size(text_input, screen_width*0.72f, screen_height*0.15f);
+	lv_obj_align(text_input, LV_ALIGN_TOP_LEFT, screen_width*0.03f, screen_height*0.03f);
 
 }
 
-void main_window::create_window()
+void main_window::create_keyboard()
 {
-	file_list_create();
-	search_file_create();
+	keyboard = lv_keyboard_create(screen);
+	lv_keyboard_set_textarea(keyboard, text_input);
+}
+
+void main_window::create_search_button()
+{
+	lv_style_t button_style;
+
+	search_button = lv_btn_create(screen);
+	lv_obj_set_size(search_button, screen_width*0.20f, screen_height*0.15f);
+	lv_obj_align_to(search_button, text_input, LV_ALIGN_OUT_RIGHT_MID, 10, 0);
+
+	lv_obj_t* label = lv_label_create(search_button);
+	lv_label_set_text(label, "Search");
+	lv_obj_center(label);
+
+	lv_style_init(&button_style);
+	lv_style_set_bg_color(&button_style, lv_color_white());
+	lv_obj_add_style(search_button, &button_style, 0);
+}
+
+void main_window::create_file_window()
+{
+	page_temp = lv_obj_create(screen);
+	lv_obj_set_size(page_temp, screen_width*0.92f+10.0f, screen_height*0.75f);
+	lv_obj_align_to(page_temp, screen, LV_FLEX_ALIGN_CENTER, 0, screen_height*0.20f);
+
+}
+
+void main_window::create_file_list()
+{
+	file_list = lv_list_create(screen);
+
+	lv_obj_set_size(file_list, screen_width*0.92f+10.0f, screen_height*0.75f);
+	lv_obj_align_to(file_list, screen, LV_FLEX_ALIGN_CENTER, 0, screen_height*0.20f);
+
+	lv_list_add_btn(file_list, LV_SYMBOL_FILE, "image1");
+	lv_list_add_btn(file_list, LV_SYMBOL_FILE, "image2");
+	lv_list_add_btn(file_list, LV_SYMBOL_FILE, "image3");
+	lv_list_add_btn(file_list, LV_SYMBOL_FILE, "image4");
+	lv_list_add_btn(file_list, LV_SYMBOL_FILE, "image5");
+	lv_list_add_btn(file_list, LV_SYMBOL_FILE, "image6");
+	lv_list_add_btn(file_list, LV_SYMBOL_FILE, "image7");
+	lv_list_add_btn(file_list, LV_SYMBOL_FILE, "image8");
+
 }
 
 
-void main_window::search_file_create()
-{
-	file_search = lv_textarea_create(get_screen());
-	lv_obj_set_pos(file_search, 5, 5);
-	lv_obj_set_size(file_search, lv_pct(98), lv_pct(15));
-	lv_textarea_set_placeholder_text(file_search, "Search file in here");
-	lv_textarea_set_cursor_click_pos(file_search, true);
 }
 
 
 
-void main_window::file_list_create()
-{
-	file_list = lv_list_create(get_screen());
-	lv_obj_set_pos(file_list, 5,2+lv_pct(15));
-	lv_obj_set_size(file_list,lv_pct(98),lv_pct(85)-7);
-}
 
 
 
-void main_window::refresh_file_list()
-{
-	do
-	{
-		fm.search_files();
-		if(fm.isfound == FILE_NOTFOUND)
-			break;
-
-		list_button = lv_list_add_btn(file_list, LV_SYMBOL_FILE, fm.current_file_name);
-		//lv_obj_add_event_cb(list_button,button_event_handler,LV_EVENT_CLICKED, nullptr);
-		lv_task_handler();
-	}
-	while(1);
-}
-
-void button_event_handler(lv_event_t * event)
-{
-
-	lv_event_code_t code = lv_event_get_code(event);
-	lv_obj_t*        obj = lv_event_get_target(event);
-
-	if( code == LV_EVENT_CLICKED )
-	{
-		detect_file_type(lv_list_get_btn_text(NULL, obj));
-	}
-
-}
 
 
 

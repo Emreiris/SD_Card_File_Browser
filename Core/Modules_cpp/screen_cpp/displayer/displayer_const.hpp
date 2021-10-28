@@ -14,7 +14,6 @@ namespace driver
 class displayer_const
 {
 protected:
-
 	static constexpr uint16_t displayer_hsync   = 41;  /* Horizontal synchronization */
 	static constexpr uint16_t displayer_hbp     = 13;  /* Horizontal back porch      */
 	static constexpr uint16_t displayer_hfp     = 32;  /* Horizontal front porch     */
