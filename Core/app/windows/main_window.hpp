@@ -32,6 +32,7 @@ public:
 	void create_file_window();
 	void create_keyboard();
 	void create_file_list();
+	void set_events();
 	lv_obj_t* get_screen(){ return screen;}
 
 private:

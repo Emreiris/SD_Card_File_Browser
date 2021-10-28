@@ -10,6 +10,24 @@
 namespace gui
 {
 
+lv_obj_t * keyboard_temp = nullptr;
+
+void keyboard_open_close(lv_event_t * event)
+{
+	static size_t i = 0;
+	i++;
+	if(i%2 == 0)
+	{
+		lv_obj_add_flag(keyboard_temp, LV_OBJ_FLAG_HIDDEN);
+	}
+	else
+	{
+		lv_obj_clear_flag(keyboard_temp, LV_OBJ_FLAG_HIDDEN);
+	}
+
+
+}
+
 main_window::main_window()//:screen(lv_obj_create(NULL))
 {
 	screen = lv_obj_create(NULL);
@@ -19,9 +37,9 @@ main_window::main_window()//:screen(lv_obj_create(NULL))
 
 	create_text_input();
 	create_search_button();
-	//create_file_window();
 	create_file_list();
-	//create_keyboard();
+	create_keyboard();
+	set_events();
 }
 
 void main_window::create_text_input()
@@ -38,6 +56,9 @@ void main_window::create_keyboard()
 {
 	keyboard = lv_keyboard_create(screen);
 	lv_keyboard_set_textarea(keyboard, text_input);
+
+	keyboard_temp = keyboard;
+
 }
 
 void main_window::create_search_button()
@@ -57,14 +78,6 @@ void main_window::create_search_button()
 	lv_obj_add_style(search_button, &button_style, 0);
 }
 
-void main_window::create_file_window()
-{
-	page_temp = lv_obj_create(screen);
-	lv_obj_set_size(page_temp, screen_width*0.92f+10.0f, screen_height*0.75f);
-	lv_obj_align_to(page_temp, screen, LV_FLEX_ALIGN_CENTER, 0, screen_height*0.20f);
-
-}
-
 void main_window::create_file_list()
 {
 	file_list = lv_list_create(screen);
@@ -81,6 +94,11 @@ void main_window::create_file_list()
 	lv_list_add_btn(file_list, LV_SYMBOL_FILE, "image7");
 	lv_list_add_btn(file_list, LV_SYMBOL_FILE, "image8");
 
+}
+
+void main_window::set_events()
+{
+	lv_obj_add_event_cb(text_input, keyboard_open_close, LV_EVENT_PRESSED, nullptr);
 }
 
 
